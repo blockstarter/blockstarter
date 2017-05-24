@@ -4,29 +4,27 @@
   p = require('prelude-ls');
   bigNumber = require('big.js');
   module.exports = curry$(function(calc, rates){
-    var zero, items, coins, startCollect, stopCollect, buildTotal, calcTotal, sum, renderTotal, totals;
+    var zero, items, coins, start, stop, collect, calcTotal, sum, renderTotal, totals;
     zero = function(){
       return bigNumber(0);
     };
     items = calc();
     coins = Object.keys(items);
-    startCollect = function(){
+    start = function(){
       return p.each(function(it){
         return items[it].start();
       })(
       coins);
     };
-    stopCollect = function(){
+    stop = function(){
       return p.each(function(it){
         return items[it].stop();
       })(
       coins);
     };
-    buildTotal = function(item, name){
-      return {
-        name: name,
-        total: item.total()
-      };
+    collect = {
+      start: start,
+      stop: stop
     };
     calcTotal = function(names, callback){
       var head, tail, total;
@@ -76,8 +74,7 @@
       });
     };
     return {
-      startCollect: startCollect,
-      stopCollect: stopCollect,
+      collect: collect,
       totals: totals,
       items: items
     };

@@ -21,12 +21,13 @@ module.exports = (get-amount)->
            | state.current >= max-index => 0
            | _ => state.current + 1
     collect = ->
+        
         return if amounts.length is 0
         return if state.paused
         item = amounts[state.current]
         
         item.1 <-! get-amount item
-          
+        #console.log \collect, item.0
         next-index!
         set-timeout collect, interval!
     start = ->

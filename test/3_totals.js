@@ -79,8 +79,9 @@
         key = ref$[i$];
         total.items[key].addAddress(accs[key].address);
       }
-      total.startCollect();
+      total.collect.start();
       return setTimeout(function(){
+        total.collect.stop();
         total.totals(function(result){
           var i$, ref$, len$, detail, acc, expectTotal;
           expect(result.details.length).toBe(3);

@@ -1,13 +1,10 @@
 main = require \../main/main.js
 big-number = require \big.js
+p = require \prelude-ls
 
 expect = require \expect
 
 describe 'Basic', (...)->
-  it \test-big-number, ->
-    expect(big-number(5).to-string!).to-be("5")
-    expect(big-number("5").to-string!).to-be("5")
-    expect(big-number("7601.11229246").to-string!).to-be("7601.11229246")
   it \exists, ->
     for coin in [\eth, \btc, \ltc]
        provider = main.new-addr[coin]
@@ -31,8 +28,8 @@ describe 'Basic', (...)->
         main.sign[coin].sign message, private-key
         
       expect(main.sign[coin].verify(message, address, signature)).to-be yes
-  it \balance, (done)->
-    @timeout 3000
+  it \balance, (done)!->
+    @timeout 15000
     accs =
       eth: 
         address: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe"
@@ -43,23 +40,33 @@ describe 'Basic', (...)->
       btc: 
         address: '16oZmpFVHpXVgyegWYXg4zNFhXVxYJemmY'
         balance: big-number "31.31659632"
-    coins = [\eth, \btc, \ltc]
     check-balance = (coin, callback)->
+        console.log \1.1, coin
         acc = accs[coin]
         provider = main.balance[coin]
         balance <-! provider acc.address
-        expect(balance).to-not-be(null, "Balance is null for #{coin}")
-        expect(balance.to-string!).to-not-be("Invalid Number", "")
-        expect(balance.equals(acc.balance)).to-be(true, "real balance #{balance.to-string!} is not expected #{acc.balance.to-string!} for #{coin}")
-        callback balance
+        try
+          expect(balance).to-not-be(null, "Balance is null for #{coin}")
+          expect(balance.eq(acc.balance)).to-be(true, "real balance #{balance.to-string!} is not expected #{acc.balance.to-string!} for #{coin}")
+        catch err
+           console.log err
+        callback!
     check-balances = (coins, callback)->
-      [head, ...tail] = coins
-      <-! check-balance head
-      if tail.length > 0
-         check-balances tail, callback
-      else
-         callback!
-    check-balances coins, done
+      return callback! if coins.length is 0
+      console.log \1, coins.0
+      <-! check-balance coins.0
+      console.log \2, coins.0
+      tail =
+        coins |> p.tail
+      console.log \3, coins.0
+      if tail.length is 0
+         return callback!
+      console.log \4, coins.0
+      <-! check-balances tail
+      callback!
+    <-! check-balances [\eth, \btc, \ltc]
+    console.log \done
+    done!
   it \rates, (done)->
     @timeout 5000
     coins = [\eth, \btc, \ltc]
