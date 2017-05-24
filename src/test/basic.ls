@@ -52,7 +52,19 @@ describe 'Basic', !(_)->
          check-balances tail, callback
       else
          callback!
-      
-        
-    
     check-balances coins, done
+  it \rates, (done)!->
+    coins = [\eth, \btc, \ltc]
+    check-rate = (coin, callback)->
+        provider = main.rate[coin]
+        rate <-! provider!
+        expect(rate).to-be-a("number")
+        callback rate
+    check-rates = (coins, callback)->
+      [head, ...tail] = coins
+      <-! check-rate head
+      if tail.length > 0
+         check-rates tail, callback
+      else
+         callback!
+    check-rates coins, done

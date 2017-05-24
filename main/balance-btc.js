@@ -8,10 +8,15 @@
     return request("https://blockchain.info/address/" + key, function(err, response){
       var $, tr;
       if (err != null) {
-        return callback("ERR");
+        return callback(null);
       }
       $ = cheerio.load(response.body);
-      tr = $('#final_balance span').html().replace(/[^0-9.]/g, "");
+      try {
+        tr = $('#final_balance span').html().replace(/[^0-9.]/g, "");
+      } catch (e$) {
+        err = e$;
+        callback(null);
+      }
       callback(bigNumber(tr));
     });
   };

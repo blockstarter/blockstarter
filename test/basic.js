@@ -75,5 +75,29 @@
       };
       checkBalances(coins, done);
     });
+    it('rates', function(done){
+      var coins, checkRate, checkRates;
+      coins = ['eth', 'btc', 'ltc'];
+      checkRate = function(coin, callback){
+        var provider;
+        provider = main.rate[coin];
+        return provider(function(rate){
+          expect(rate).toBeA("number");
+          callback(rate);
+        });
+      };
+      checkRates = function(coins, callback){
+        var head, tail;
+        head = coins[0], tail = slice$.call(coins, 1);
+        return checkRate(head, function(){
+          if (tail.length > 0) {
+            checkRates(tail, callback);
+          } else {
+            callback();
+          }
+        });
+      };
+      checkRates(coins, done);
+    });
   });
 }).call(this);

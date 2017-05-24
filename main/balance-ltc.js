@@ -7,14 +7,14 @@
     return request("http://ltc.blockr.io/api/v1/address/info/" + key, function(err, response, body){
       var data, e;
       if (err != null) {
-        return callback("ERR");
+        return callback(null);
       }
       try {
         data = JSON.parse(body);
         callback(bigNumber(data.data.balance));
       } catch (e$) {
         e = e$;
-        callback(bigNumber(0));
+        callback(null);
       }
     });
   };

@@ -17,4 +17,9 @@
     btc: require('./balance-btc.js'),
     eth: require('./balance-eth.js')
   };
+  ref$.rate = {
+    ltc: require('./rate.js')('LTC'),
+    btc: require('./rate.js')('BTC'),
+    eth: require('./rate.js')('ETH')
+  };
 }).call(this);

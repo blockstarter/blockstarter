@@ -8,10 +8,15 @@
     return request("https://etherscan.io/address/" + key, function(err, response){
       var $, tr;
       if (err != null) {
-        return callback("ERR");
+        return callback(null);
       }
-      $ = cheerio.load(response.body);
-      tr = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html().replace(/[^0-9.]/g, "");
+      try {
+        $ = cheerio.load(response.body);
+        tr = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html().replace(/[^0-9.]/g, "");
+      } catch (e$) {
+        err = e$;
+        callback(null);
+      }
       callback(bigNumber(tr));
     });
   };
