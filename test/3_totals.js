@@ -7,7 +7,7 @@
   describe('Totals', function(){
     it('empty', function(done){
       var total;
-      this.timeout(5000);
+      this.timeout(10000);
       total = main.total(main.rate);
       return total.totals(function(result){
         var i$, ref$, len$, detail;
@@ -48,7 +48,7 @@
     });
     return it('add-address', function(done){
       var rate, getRate, accs, total, state, i$, ref$, len$, key;
-      this.timeout(15000);
+      this.timeout(8000);
       rate = 2;
       getRate = function(callback){
         return callback(rate);
@@ -59,12 +59,12 @@
           balance: bigNumber("802672.276608465139479303")
         },
         ltc: {
-          address: "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T",
-          balance: bigNumber("11238.41463408")
+          address: "34Ae29qWAhGGTw3cSNkPygiwsgKbbCatou",
+          balance: bigNumber("402474.2484")
         },
         btc: {
-          address: '16oZmpFVHpXVgyegWYXg4zNFhXVxYJemmY',
-          balance: bigNumber("31.6455421")
+          address: '1HQ3Go3ggs8pFnXuHVHRytPCq5fGG8Hbhx',
+          balance: bigNumber("69370.10701994")
         }
       };
       total = main.total({
@@ -89,15 +89,16 @@
             detail = ref$[i$];
             acc = accs[detail.name];
             expectTotal = acc.balance.times(bigNumber(rate));
-            state.expectTotal.plus(expectTotal);
+            state.expectTotal = state.expectTotal.plus(expectTotal);
+            console.log("--", state.expectTotal.toString(), expectTotal.toString());
             expect(detail.amount).toBe(acc.balance.toString(), "Total Amount is wrong for " + detail.name + " expected " + acc.balance.toString() + " got " + detail.amount);
             expect(detail.amountUsd).toBe(expectTotal.toString(), "Total Amount USD is wrong for " + detail.name + " expected " + detail.amountUsd.toString() + " got " + expectTotal.toString());
             expect(detail.rate).toBe(rate, "Rate is wrong for " + detail.name);
           }
-          expect(result.totalUsd).toBe(state.expectTotal.toString(), "Total Amount USD is wrong}");
+          expect(result.totalUsd.toString()).toBe(state.expectTotal.toString(), "Total Amount USD is wrong got " + result.totalUsd.toString() + " expected " + state.expectTotal.toString());
           done();
         });
-      }, 4000);
+      }, 3000);
     });
   });
 }).call(this);

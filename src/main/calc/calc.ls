@@ -29,6 +29,7 @@ module.exports = (get-amount)->
         if amount?
           item.1 = amount
         next-index!
+        calc-total!
         set-timeout collect, interval!
     start = ->
         state.paused = no

@@ -21,7 +21,7 @@ module.exports = (calc, rates)-->
            amount-usd: big-number(usd).times total
            rate: usd
        rest <-! calc-total tail
-       callback [item] ++ rest
+       callback([item] ++ rest)
    sum = (first, second)->
        first.plus second
    render-total = (total)->
@@ -34,8 +34,9 @@ module.exports = (calc, rates)-->
    totals = (done)->
        items <-! calc-total coins
        total-usd =
-           items |> p.map (.amount-usd) 
+           items |> p.map (.amount-usd)
                  |> p.foldl sum, zero!
+       #console.log \total, total-usd.to-string!, items.0
        result =
          total-usd: total-usd.to-string!
          details: items |> p.map render-total

@@ -49,12 +49,12 @@
           balance: bigNumber("802672.276608465139479303")
         },
         ltc: {
-          address: "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T",
-          balance: bigNumber("11238.41463408")
+          address: "34Ae29qWAhGGTw3cSNkPygiwsgKbbCatou",
+          balance: bigNumber("402474.2484")
         },
         btc: {
-          address: '16oZmpFVHpXVgyegWYXg4zNFhXVxYJemmY',
-          balance: bigNumber("31.6455421")
+          address: '1HQ3Go3ggs8pFnXuHVHRytPCq5fGG8Hbhx',
+          balance: bigNumber("69370.10701994")
         }
       };
       checkBalance = function(coin, callback){

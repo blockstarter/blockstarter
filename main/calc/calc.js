@@ -53,6 +53,7 @@
           item[1] = amount;
         }
         nextIndex();
+        calcTotal();
         setTimeout(collect, interval());
       });
     };
