@@ -5,7 +5,6 @@
   cheerio = require('cheerio');
   bigNumber = require('big-number');
   module.exports = function(key, callback){
-    console.log("https://blockchain.info/address/" + key);
     return request("https://blockchain.info/address/" + key, function(err, response){
       var $, tr;
       if (err != null) {

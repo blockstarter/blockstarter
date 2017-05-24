@@ -7,9 +7,11 @@ big-number = require \big-number
 
 module.exports = (key, callback)->
     err, response <-! request "https://blockchain.info/address/#{key}"
-    if err?
-      return callback "ERR"
+    return callback null if err?
     $ = cheerio.load response.body
-    tr = $('#final_balance span').html!.replace(/[^0-9.]/g,"")
+    try
+      tr = $('#final_balance span').html!.replace(/[^0-9.]/g,"")
+    catch err
+      callback null
     callback big-number tr
     

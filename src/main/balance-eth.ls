@@ -7,8 +7,10 @@ big-number = require \big-number
 
 module.exports = (key, callback)->
     err, response <-! request "https://etherscan.io/address/#{key}"
-    if err?
-      return callback "ERR"
-    $ = cheerio.load response.body
-    tr = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html!.replace(/[^0-9.]/g,"")
+    return callback null if err?
+    try 
+      $ = cheerio.load response.body
+      tr = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html!.replace(/[^0-9.]/g,"")
+    catch err
+      callback null
     callback big-number tr

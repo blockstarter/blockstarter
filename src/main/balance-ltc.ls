@@ -6,10 +6,9 @@ big-number = require \big-number
 
 module.exports = (key, callback)->
     err, response, body <-! request "http://ltc.blockr.io/api/v1/address/info/#{key}"
-    if err?
-      return callback "ERR"
+    return callback null if err?
     try 
       data = JSON.parse body
       callback big-number data.data.balance
     catch 
-      callback big-number 0
+      callback null
