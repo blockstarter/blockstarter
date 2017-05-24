@@ -67,7 +67,7 @@
       }
     };
     addAddress = function(address){
-      return state.amounts.push([address, 0]);
+      return amounts.push([address, 0]);
     };
     removeAddress = function(address){
       var item, index;
@@ -75,13 +75,13 @@
       p.filter(function(it){
         return it[0] === address;
       })(
-      state.amounts));
+      amounts));
       if (item == null) {
         return;
       }
-      index = state.amounts.indexOf(item);
+      index = amounts.indexOf(item);
       if (index > -1) {
-        return state.amounts.splice(index, 1);
+        return amounts.splice(index, 1);
       }
     };
     sum = function(first, second){
@@ -96,7 +96,7 @@
       p.map(function(it){
         return it[1];
       })(
-      state.amounts)));
+      amounts)));
     };
     return {
       amounts: amounts,

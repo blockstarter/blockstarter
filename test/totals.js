@@ -22,10 +22,11 @@
         done();
       });
     });
-    return it('static-rate', function(done){
-      var getRate, total;
+    it('static-rate', function(done){
+      var rate, getRate, total;
+      rate = 1;
       getRate = function(callback){
-        return callback(1);
+        return callback(rate);
       };
       total = main.total({
         btc: getRate,
@@ -40,8 +41,59 @@
           detail = ref$[i$];
           expect(detail.amount).toBe('0');
           expect(detail.amountUsd).toBe('0');
-          expect(detail.rate).toBe(1);
+          expect(detail.rate).toBe(rate);
         }
+        done();
+      });
+    });
+    return it('add-address', function(done){
+      var rate, getRate, accs, total, state, i$, ref$, len$, key;
+      this.timeout(5000);
+      rate = 2;
+      getRate = function(callback){
+        return callback(rate);
+      };
+      accs = {
+        eth: {
+          address: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe",
+          balance: bigNumber("802672.276608465139479303")
+        },
+        ltc: {
+          address: "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T",
+          balance: bigNumber("7601.11229246")
+        },
+        btc: {
+          address: '16oZmpFVHpXVgyegWYXg4zNFhXVxYJemmY',
+          balance: bigNumber("31.31659632")
+        }
+      };
+      total = main.total({
+        btc: getRate,
+        ltc: getRate,
+        eth: getRate
+      });
+      state = {
+        expectTotal: bigNumber(0)
+      };
+      for (i$ = 0, len$ = (ref$ = Object.keys(accs)).length; i$ < len$; ++i$) {
+        key = ref$[i$];
+        total.items[key].addAddress(accs[key].address);
+      }
+      return total.totals(function(result){
+        var i$, ref$, len$, detail, acc, expectTotal;
+        expect(result.details.length).toBe(3);
+        for (i$ = 0, len$ = (ref$ = result.details).length; i$ < len$; ++i$) {
+          detail = ref$[i$];
+          acc = accs[detail.name];
+          expectTotal = acc.balance.multiply(bigNumber(rate));
+          console.log(bigNumber("7601.11229246"));
+          console.log(acc.balance.toString(), rate.toString());
+          state.expectTotal.plus(expectTotal);
+          expect(detail.amount).toBe(acc.balance.toString(), "Total Amount is wrong for " + detail.name + " expected " + acc.balance.toString() + " got " + detail.amount);
+          expect(detail.amountUsd).toBe(expectTotal.toString(), "Total Amount USD is wrong for " + detail.name + " expected " + detail.amountUsd.toString() + " got " + expectTotal.toString());
+          expect(detail.rate).toBe(rate, "Rate is wrong for " + detail.name);
+        }
+        expect(result.totalUsd).toBe(state.expectTotal.toString(), "Total Amount USD is wrong}");
         done();
       });
     });

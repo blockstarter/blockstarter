@@ -16,8 +16,9 @@ describe \Totals, (...)->
            expect(detail.rate).to-be-greater-than(0)
         done!
     it \static-rate, (done)->
+        rate = 1
         get-rate = (callback)->
-            callback 1
+            callback rate
         total =
            main.total { btc: get-rate, ltc: get-rate, eth: get-rate }
         result <-! total.totals
@@ -26,5 +27,40 @@ describe \Totals, (...)->
         for detail in result.details
            expect(detail.amount).to-be('0')
            expect(detail.amount-usd).to-be('0')
-           expect(detail.rate).to-be(1)
+           expect(detail.rate).to-be(rate)
+        done!
+    it \add-address, (done)->
+        @timeout 5000
+        rate = 2
+        get-rate = (callback)->
+            callback rate
+        accs =
+          eth: 
+            address: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe"
+            balance: big-number "802672.276608465139479303"
+          ltc: 
+            address: "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T"
+            balance: big-number "7601.11229246"
+          btc: 
+            address: '16oZmpFVHpXVgyegWYXg4zNFhXVxYJemmY'
+            balance: big-number "31.31659632"
+        total =
+           main.total { btc: get-rate, ltc: get-rate, eth: get-rate }
+        state =
+          expect-total: big-number 0
+        for key in Object.keys(accs)
+           total.items[key].add-address accs[key].address
+           
+        result <-! total.totals
+        expect(result.details.length).to-be(3)
+        for detail in result.details
+           acc = accs[detail.name]
+           expect-total = acc.balance.multiply(big-number rate)
+           console.log big-number "7601.11229246"
+           console.log acc.balance.to-string!, rate.to-string!
+           state.expect-total.plus expect-total
+           expect(detail.amount).to-be(acc.balance.to-string!, "Total Amount is wrong for #{detail.name} expected #{acc.balance.to-string!} got #{detail.amount}")
+           expect(detail.amount-usd).to-be(expect-total.to-string!, "Total Amount USD is wrong for #{detail.name} expected #{detail.amount-usd.to-string!} got #{expect-total.to-string!}")
+           expect(detail.rate).to-be(rate, "Rate is wrong for #{detail.name}")
+        expect(result.total-usd).to-be(state.expect-total.to-string!, "Total Amount USD is wrong}")
         done!

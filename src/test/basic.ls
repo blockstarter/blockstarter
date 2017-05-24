@@ -4,6 +4,10 @@ big-number = require \big-number
 expect = require \expect
 
 describe 'Basic', (...)->
+  it \test-big-number, ->
+    expect(big-number(5).to-string!).to-be("5")
+    expect(big-number("5").to-string!).to-be("5")
+    expect(big-number("7601.11229246").to-string!).to-be("7601.11229246")
   it \exists, ->
     for coin in [\eth, \btc, \ltc]
        provider = main.new-addr[coin]

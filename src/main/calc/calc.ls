@@ -36,21 +36,21 @@ module.exports = (get-amount)->
     status = ->
         if state.paused then \paused else \running
     add-address = (address)->
-        state.amounts.push [address, 0]
+        amounts.push [address, 0]
     remove-address = (address)->
         item = 
-            state.amounts |> p.filter (-> it.0 is address) |> p.head
+            amounts |> p.filter (-> it.0 is address) |> p.head
         return if not item?
-        index = state.amounts.index-of(item)
+        index = amounts.index-of(item)
         if index > -1
-           state.amounts.splice index, 1
+           amounts.splice index, 1
     sum = (first, second)->
         first.plus second
     calc-total = ->
         state.total = 
-           state.amounts |> p.map (.1)
-                         |> p.filter (?)
-                         |> p.foldl sum, zero!
+           amounts |> p.map (.1)
+                   |> p.filter (?)
+                   |> p.foldl sum, zero!
     { 
     amounts
     start

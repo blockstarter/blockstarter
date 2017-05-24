@@ -5,6 +5,10 @@
   bigNumber = require('big-number');
   expect = require('expect');
   describe('Basic', function(){
+    it('test-big-number', function(){
+      expect(bigNumber(5).toString()).toBe("5");
+      return expect(bigNumber("5").toString()).toBe("5");
+    });
     it('exists', function(){
       var i$, ref$, len$, coin, provider, results$ = [];
       for (i$ = 0, len$ = (ref$ = ['eth', 'btc', 'ltc']).length; i$ < len$; ++i$) {
