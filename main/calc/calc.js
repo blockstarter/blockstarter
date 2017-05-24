@@ -4,7 +4,7 @@
   p = require('prelude-ls');
   bigNumber = require('big.js');
   module.exports = function(getAmount){
-    var amounts, zero, state, total, interval, nextIndex, collect, start, stop, status, addAddress, removeAddress, sum, calcTotal;
+    var amounts, zero, state, total, interval, nextIndex, collect, start, stop, status, getAddress, addAddress, removeAddress, sum, calcTotal;
     amounts = [];
     zero = function(){
       return bigNumber(0);
@@ -71,16 +71,21 @@
         return 'running';
       }
     };
+    getAddress = function(address){
+      return p.find(function(it){
+        return it[0] === address;
+      })(
+      amounts);
+    };
     addAddress = function(address){
+      if (getAddress(address) != null) {
+        return;
+      }
       return amounts.push([address, zero()]);
     };
     removeAddress = function(address){
       var item, index;
-      item = p.head(
-      p.filter(function(it){
-        return it[0] === address;
-      })(
-      amounts));
+      item = getAddress(address);
       if (item == null) {
         return;
       }

@@ -38,11 +38,13 @@ module.exports = (get-amount)->
         state.paused = yes
     status = ->
         if state.paused then \paused else \running
+    get-address = (address)->
+        amounts |> p.find (-> it.0 is address)
     add-address = (address)->
+        return if get-address(address)?
         amounts.push [address, zero!]
     remove-address = (address)->
-        item = 
-            amounts |> p.filter (-> it.0 is address) |> p.head
+        item = get-address(address)
         return if not item?
         index = amounts.index-of(item)
         if index > -1

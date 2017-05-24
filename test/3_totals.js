@@ -90,7 +90,6 @@
             acc = accs[detail.name];
             expectTotal = acc.balance.times(bigNumber(rate));
             state.expectTotal = state.expectTotal.plus(expectTotal);
-            console.log("--", state.expectTotal.toString(), expectTotal.toString());
             expect(detail.amount).toBe(acc.balance.toString(), "Total Amount is wrong for " + detail.name + " expected " + acc.balance.toString() + " got " + detail.amount);
             expect(detail.amountUsd).toBe(expectTotal.toString(), "Total Amount USD is wrong for " + detail.name + " expected " + detail.amountUsd.toString() + " got " + expectTotal.toString());
             expect(detail.rate).toBe(rate, "Rate is wrong for " + detail.name);
