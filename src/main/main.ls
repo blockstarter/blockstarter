@@ -1,18 +1,18 @@
 export 
   new-addr:
-    eth: require \./new-addr-eth.js
-    btc: require \./new-addr-btc.js
-    ltc: require \./new-addr-ltc.js
+    eth: require \./new-addr/new-addr-eth.js
+    btc: require \./new-addr/new-addr-btc.js
+    ltc: require \./new-addr/new-addr-ltc.js
   sign:
-    eth: require \./sign-eth.js
-    btc: require \./sign-btc.js
-    ltc: require \./sign-ltc.js
+    eth: require \./sign/sign-eth.js
+    btc: require \./sign/sign-btc.js
+    ltc: require \./sign/sign-ltc.js
   balance:
-    ltc: require \./balance-ltc.js
-    btc: require \./balance-btc.js
-    eth: require \./balance-eth.js
+    ltc: require \./balance/balance-ltc.js
+    btc: require \./balance/balance-btc.js
+    eth: require \./balance/balance-eth.js
   rate:
-    ltc: require(\./rate.js) \LTC
-    btc: require(\./rate.js) \BTC
-    eth: require(\./rate.js) \ETH
+    ltc: require(\./rate/rate.js) \LTC
+    btc: require(\./rate/rate.js) \BTC
+    eth: require(\./rate/rate.js) \ETH
     

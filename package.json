@@ -22,7 +22,8 @@
     "test": [
       "sh test.sh"
     ],
-    "main": "lsc -co ./main ./src/main/*.ls"
+    "main": "fs 'src/**/*.ls' | replace 'src','' | replace '.ls','' | map 'lsc -cp ./src*.ls > .*.js' | bash",
+    "test": "npm run main && mocha"
   },
   "repository": {
     "type": "git",
