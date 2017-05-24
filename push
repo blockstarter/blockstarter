@@ -1,0 +1,8 @@
+jq .subversion=.subversion+1 package.json > output.json
+jq .version=.uperversion+\".\"+\(.subversion\|tostring\) output.json > package.json
+rm output.json
+git add -u
+git add .
+git commit -m "$1"
+git push origin master
+npm publish

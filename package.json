@@ -1,6 +1,8 @@
 {
   "name": "blockstarter",
-  "version": "1.0.0",
+  "version": "0.1.1",
+  "uperversion": "0.1",
+  "subversion": 1,
   "description": "",
   "main": "./lib/main.js",
   "dependencies": {
