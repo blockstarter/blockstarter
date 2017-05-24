@@ -2,7 +2,7 @@
 (function(){
   var request, bigNumber;
   request = require('request');
-  bigNumber = require('big-number');
+  bigNumber = require('big.js');
   module.exports = curry$(function(name, callback){
     return request("https://min-api.cryptocompare.com/data/price?fsym=" + name + "&tsyms=USD", function(err, response, body){
       var data, e;

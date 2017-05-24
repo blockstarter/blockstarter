@@ -2,12 +2,13 @@
 (function(){
   var main, bigNumber, expect, slice$ = [].slice;
   main = require('../main/main.js');
-  bigNumber = require('big-number');
+  bigNumber = require('big.js');
   expect = require('expect');
   describe('Basic', function(){
     it('test-big-number', function(){
       expect(bigNumber(5).toString()).toBe("5");
-      return expect(bigNumber("5").toString()).toBe("5");
+      expect(bigNumber("5").toString()).toBe("5");
+      return expect(bigNumber("7601.11229246").toString()).toBe("7601.11229246");
     });
     it('exists', function(){
       var i$, ref$, len$, coin, provider, results$ = [];
@@ -66,6 +67,8 @@
         acc = accs[coin];
         provider = main.balance[coin];
         return provider(acc.address, function(balance){
+          expect(balance).toNotBe(null, "Balance is null for " + coin);
+          expect(balance.toString()).toNotBe("Invalid Number", "");
           expect(balance.equals(acc.balance)).toBe(true, "real balance " + balance.toString() + " is not expected " + acc.balance.toString() + " for " + coin);
           callback(balance);
         });

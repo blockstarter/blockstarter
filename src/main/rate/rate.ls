@@ -1,5 +1,5 @@
 request = require \request
-big-number = require \big-number
+big-number = require \big.js
 
 module.exports = (name, callback)-->
     err, response, body <-! request "\https://min-api.cryptocompare.com/data/price?fsym=#{name}&tsyms=USD"

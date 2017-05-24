@@ -1,5 +1,5 @@
 main = require \../main/main.js
-big-number = require \big-number
+big-number = require \big.js
 expect = require \expect
 
 describe \Totals, (...)->
@@ -50,14 +50,13 @@ describe \Totals, (...)->
           expect-total: big-number 0
         for key in Object.keys(accs)
            total.items[key].add-address accs[key].address
-           
+        total.start-collect!
+        <-! set-timeout _, 2000
         result <-! total.totals
         expect(result.details.length).to-be(3)
         for detail in result.details
            acc = accs[detail.name]
-           expect-total = acc.balance.multiply(big-number rate)
-           console.log big-number "7601.11229246"
-           console.log acc.balance.to-string!, rate.to-string!
+           expect-total = acc.balance.times(big-number rate)
            state.expect-total.plus expect-total
            expect(detail.amount).to-be(acc.balance.to-string!, "Total Amount is wrong for #{detail.name} expected #{acc.balance.to-string!} got #{detail.amount}")
            expect(detail.amount-usd).to-be(expect-total.to-string!, "Total Amount USD is wrong for #{detail.name} expected #{detail.amount-usd.to-string!} got #{expect-total.to-string!}")

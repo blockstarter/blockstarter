@@ -2,7 +2,7 @@
 (function(){
   var p, bigNumber, slice$ = [].slice;
   p = require('prelude-ls');
-  bigNumber = require('big-number');
+  bigNumber = require('big.js');
   module.exports = curry$(function(calc, rates){
     var zero, items, coins, startCollect, stopCollect, buildTotal, calcTotal, sum, renderTotal, totals;
     zero = function(){
@@ -40,7 +40,7 @@
         item = {
           name: head,
           amount: total,
-          amountUsd: bigNumber(usd).multiply(total),
+          amountUsd: bigNumber(usd).times(total),
           rate: usd
         };
         calcTotal(tail, function(rest){

@@ -2,7 +2,7 @@
 (function(){
   var main, bigNumber, expect;
   main = require('../main/main.js');
-  bigNumber = require('big-number');
+  bigNumber = require('big.js');
   expect = require('expect');
   describe('Totals', function(){
     it('empty', function(done){
@@ -79,23 +79,24 @@
         key = ref$[i$];
         total.items[key].addAddress(accs[key].address);
       }
-      return total.totals(function(result){
-        var i$, ref$, len$, detail, acc, expectTotal;
-        expect(result.details.length).toBe(3);
-        for (i$ = 0, len$ = (ref$ = result.details).length; i$ < len$; ++i$) {
-          detail = ref$[i$];
-          acc = accs[detail.name];
-          expectTotal = acc.balance.multiply(bigNumber(rate));
-          console.log(bigNumber("7601.11229246"));
-          console.log(acc.balance.toString(), rate.toString());
-          state.expectTotal.plus(expectTotal);
-          expect(detail.amount).toBe(acc.balance.toString(), "Total Amount is wrong for " + detail.name + " expected " + acc.balance.toString() + " got " + detail.amount);
-          expect(detail.amountUsd).toBe(expectTotal.toString(), "Total Amount USD is wrong for " + detail.name + " expected " + detail.amountUsd.toString() + " got " + expectTotal.toString());
-          expect(detail.rate).toBe(rate, "Rate is wrong for " + detail.name);
-        }
-        expect(result.totalUsd).toBe(state.expectTotal.toString(), "Total Amount USD is wrong}");
-        done();
-      });
+      total.startCollect();
+      return setTimeout(function(){
+        total.totals(function(result){
+          var i$, ref$, len$, detail, acc, expectTotal;
+          expect(result.details.length).toBe(3);
+          for (i$ = 0, len$ = (ref$ = result.details).length; i$ < len$; ++i$) {
+            detail = ref$[i$];
+            acc = accs[detail.name];
+            expectTotal = acc.balance.times(bigNumber(rate));
+            state.expectTotal.plus(expectTotal);
+            expect(detail.amount).toBe(acc.balance.toString(), "Total Amount is wrong for " + detail.name + " expected " + acc.balance.toString() + " got " + detail.amount);
+            expect(detail.amountUsd).toBe(expectTotal.toString(), "Total Amount USD is wrong for " + detail.name + " expected " + detail.amountUsd.toString() + " got " + expectTotal.toString());
+            expect(detail.rate).toBe(rate, "Rate is wrong for " + detail.name);
+          }
+          expect(result.totalUsd).toBe(state.expectTotal.toString(), "Total Amount USD is wrong}");
+          done();
+        });
+      }, 2000);
     });
   });
 }).call(this);

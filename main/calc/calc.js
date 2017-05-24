@@ -2,7 +2,7 @@
 (function(){
   var p, bigNumber;
   p = require('prelude-ls');
-  bigNumber = require('big-number');
+  bigNumber = require('big.js');
   module.exports = function(getAmount){
     var amounts, zero, state, total, interval, nextIndex, collect, start, stop, status, addAddress, removeAddress, sum, calcTotal;
     amounts = [];
@@ -48,9 +48,11 @@
         return;
       }
       item = amounts[state.current];
-      item[1] = getAmount(item);
-      nextIndex();
-      return setTimeout(collect, interval());
+      return getAmount(item, function($1){
+        item[1] = $1;
+        nextIndex();
+        setTimeout(collect, interval());
+      });
     };
     start = function(){
       state.paused = false;

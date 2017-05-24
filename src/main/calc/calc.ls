@@ -1,5 +1,5 @@
 p = require \prelude-ls
-big-number = require \big-number
+big-number = require \big.js
 
 module.exports = (get-amount)->
     amounts = []
@@ -24,8 +24,9 @@ module.exports = (get-amount)->
         return if amounts.length is 0
         return if state.paused
         item = amounts[state.current]
-        item.1 =
-          get-amount item
+        
+        item.1 <-! get-amount item
+          
         next-index!
         set-timeout collect, interval!
     start = ->

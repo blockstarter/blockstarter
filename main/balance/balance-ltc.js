@@ -2,8 +2,8 @@
 (function(){
   var request, bigNumber;
   request = require('request');
-  bigNumber = require('big-number');
-  module.exports = function(key, callback){
+  bigNumber = require('big.js');
+  module.exports = curry$(function(key, callback){
     return request("http://ltc.blockr.io/api/v1/address/info/" + key, function(err, response, body){
       var data, e;
       if (err != null) {
@@ -17,5 +17,18 @@
         callback(null);
       }
     });
-  };
+  });
+  function curry$(f, bound){
+    var context,
+    _curry = function(args) {
+      return f.length > 1 ? function(){
+        var params = args ? args.concat() : [];
+        context = bound ? context || this : this;
+        return params.push.apply(params, arguments) <
+            f.length && arguments.length ?
+          _curry.call(context, params) : f.apply(context, params);
+      } : f;
+    };
+    return _curry();
+  }
 }).call(this);

@@ -1,5 +1,5 @@
 p = require \prelude-ls
-big-number = require \big-number
+big-number = require \big.js
 module.exports = (calc, rates)-->
    zero = ->
        big-number 0
@@ -20,7 +20,7 @@ module.exports = (calc, rates)-->
        item =
            name: head
            amount: total
-           amount-usd: big-number(usd).multiply total
+           amount-usd: big-number(usd).times total
            rate: usd
        rest <-! calc-total tail
        callback [item] ++ rest

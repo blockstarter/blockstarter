@@ -3,8 +3,8 @@
   var request, cheerio, bigNumber;
   request = require('request');
   cheerio = require('cheerio');
-  bigNumber = require('big-number');
-  module.exports = function(key, callback){
+  bigNumber = require('big.js');
+  module.exports = curry$(function(key, callback){
     return request("https://blockchain.info/address/" + key, function(err, response){
       var $, tr;
       if (err != null) {
@@ -13,11 +13,24 @@
       $ = cheerio.load(response.body);
       try {
         tr = $('#final_balance span').html().replace(/[^0-9.]/g, "");
+        callback(bigNumber(tr));
       } catch (e$) {
         err = e$;
         callback(null);
       }
-      callback(bigNumber(tr));
     });
-  };
+  });
+  function curry$(f, bound){
+    var context,
+    _curry = function(args) {
+      return f.length > 1 ? function(){
+        var params = args ? args.concat() : [];
+        context = bound ? context || this : this;
+        return params.push.apply(params, arguments) <
+            f.length && arguments.length ?
+          _curry.call(context, params) : f.apply(context, params);
+      } : f;
+    };
+    return _curry();
+  }
 }).call(this);

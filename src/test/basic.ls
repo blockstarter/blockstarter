@@ -1,5 +1,5 @@
 main = require \../main/main.js
-big-number = require \big-number
+big-number = require \big.js
 
 expect = require \expect
 
@@ -48,6 +48,8 @@ describe 'Basic', (...)->
         acc = accs[coin]
         provider = main.balance[coin]
         balance <-! provider acc.address
+        expect(balance).to-not-be(null, "Balance is null for #{coin}")
+        expect(balance.to-string!).to-not-be("Invalid Number", "")
         expect(balance.equals(acc.balance)).to-be(true, "real balance #{balance.to-string!} is not expected #{acc.balance.to-string!} for #{coin}")
         callback balance
     check-balances = (coins, callback)->
