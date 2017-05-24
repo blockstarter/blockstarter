@@ -30,7 +30,7 @@ describe \Totals, (...)->
            expect(detail.rate).to-be(rate)
         done!
     it \add-address, (done)->
-        @timeout 5000
+        @timeout 15000
         rate = 2
         get-rate = (callback)->
             callback rate
@@ -40,10 +40,10 @@ describe \Totals, (...)->
             balance: big-number "802672.276608465139479303"
           ltc: 
             address: "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T"
-            balance: big-number "7601.11229246"
+            balance: big-number "11238.41463408"
           btc: 
             address: '16oZmpFVHpXVgyegWYXg4zNFhXVxYJemmY'
-            balance: big-number "31.31659632"
+            balance: big-number "31.6455421"
         total =
            main.total { btc: get-rate, ltc: get-rate, eth: get-rate }
         state =
@@ -51,7 +51,7 @@ describe \Totals, (...)->
         for key in Object.keys(accs)
            total.items[key].add-address accs[key].address
         total.collect.start!
-        <-! set-timeout _, 2000
+        <-! set-timeout _, 4000
         total.collect.stop!
         result <-! total.totals
         expect(result.details.length).to-be(3)

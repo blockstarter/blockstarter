@@ -8,9 +8,9 @@
   };
   calc = function(){
     return {
-      ltc: require('./calc/calc.js')(balance.ltc),
-      btc: require('./calc/calc.js')(balance.btc),
-      eth: require('./calc/calc.js')(balance.eth)
+      ltc: require('./calc/calc.js')(bind$(balance, 'ltc')),
+      btc: require('./calc/calc.js')(bind$(balance, 'btc')),
+      eth: require('./calc/calc.js')(bind$(balance, 'eth'))
     };
   };
   rate = {
@@ -36,4 +36,7 @@
   ref$.rate = rate;
   ref$.calc = calc;
   ref$.total = total;
+  function bind$(obj, key, target){
+    return function(){ return (target || obj)[key].apply(obj, arguments) };
+  }
 }).call(this);

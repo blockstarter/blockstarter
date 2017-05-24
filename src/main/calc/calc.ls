@@ -25,9 +25,9 @@ module.exports = (get-amount)->
         return if amounts.length is 0
         return if state.paused
         item = amounts[state.current]
-        
-        item.1 <-! get-amount item
-        #console.log \collect, item.0
+        amount <-! get-amount item.0
+        if amount?
+          item.1 = amount
         next-index!
         set-timeout collect, interval!
     start = ->
@@ -38,7 +38,7 @@ module.exports = (get-amount)->
     status = ->
         if state.paused then \paused else \running
     add-address = (address)->
-        amounts.push [address, 0]
+        amounts.push [address, zero!]
     remove-address = (address)->
         item = 
             amounts |> p.filter (-> it.0 is address) |> p.head

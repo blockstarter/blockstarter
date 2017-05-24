@@ -36,12 +36,11 @@ describe 'Basic', (...)->
         balance: big-number "802672.276608465139479303"
       ltc: 
         address: "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T"
-        balance: big-number "7601.11229246"
+        balance: big-number "11238.41463408"
       btc: 
         address: '16oZmpFVHpXVgyegWYXg4zNFhXVxYJemmY'
-        balance: big-number "31.31659632"
+        balance: big-number "31.6455421"
     check-balance = (coin, callback)->
-        console.log \1.1, coin
         acc = accs[coin]
         provider = main.balance[coin]
         balance <-! provider acc.address
@@ -53,15 +52,11 @@ describe 'Basic', (...)->
         callback!
     check-balances = (coins, callback)->
       return callback! if coins.length is 0
-      console.log \1, coins.0
       <-! check-balance coins.0
-      console.log \2, coins.0
       tail =
         coins |> p.tail
-      console.log \3, coins.0
       if tail.length is 0
          return callback!
-      console.log \4, coins.0
       <-! check-balances tail
       callback!
     <-! check-balances [\eth, \btc, \ltc]

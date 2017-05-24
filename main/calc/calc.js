@@ -48,8 +48,10 @@
         return;
       }
       item = amounts[state.current];
-      return getAmount(item, function($1){
-        item[1] = $1;
+      return getAmount(item[0], function(amount){
+        if (amount != null) {
+          item[1] = amount;
+        }
         nextIndex();
         setTimeout(collect, interval());
       });
@@ -69,7 +71,7 @@
       }
     };
     addAddress = function(address){
-      return amounts.push([address, 0]);
+      return amounts.push([address, zero()]);
     };
     removeAddress = function(address){
       var item, index;

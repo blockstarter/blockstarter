@@ -10,5 +10,8 @@ module.exports = (key, callback)->
     return callback null if err?
     
     $ = cheerio.load response.body
+    html = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html!
+    return callback null if not html?
     tr = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html!.replace(/[^0-9.]/g,"")
+    #console.log \eth, key,  tr
     callback big-number tr

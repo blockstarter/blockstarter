@@ -9,7 +9,11 @@ module.exports = (key, callback)->
     err, response <-! request "https://blockchain.info/address/#{key}"
     return callback null if err?
     $ = cheerio.load response.body
+    html = $('#final_balance span').html!
+    return callback null if not html?
+    
     tr = $('#final_balance span').html!.replace(/[^0-9.]/g,"")
+    #console.log \btc, key,  tr
     callback big-number tr
     
     

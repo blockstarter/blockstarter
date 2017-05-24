@@ -8,4 +8,5 @@ module.exports = (key, callback)->
     err, response, body <-! request "http://ltc.blockr.io/api/v1/address/info/#{key}"
     return callback null if err?
     data = JSON.parse body
+    #console.log \ltc, key,  data.data.balance
     callback big-number data.data.balance

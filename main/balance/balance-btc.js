@@ -6,11 +6,15 @@
   bigNumber = require('big.js');
   module.exports = function(key, callback){
     return request("https://blockchain.info/address/" + key, function(err, response){
-      var $, tr;
+      var $, html, tr;
       if (err != null) {
         return callback(null);
       }
       $ = cheerio.load(response.body);
+      html = $('#final_balance span').html();
+      if (html == null) {
+        return callback(null);
+      }
       tr = $('#final_balance span').html().replace(/[^0-9.]/g, "");
       callback(bigNumber(tr));
     });

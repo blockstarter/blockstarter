@@ -6,11 +6,15 @@
   bigNumber = require('big.js');
   module.exports = function(key, callback){
     return request("https://etherscan.io/address/" + key, function(err, response){
-      var $, tr;
+      var $, html, tr;
       if (err != null) {
         return callback(null);
       }
       $ = cheerio.load(response.body);
+      html = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html();
+      if (html == null) {
+        return callback(null);
+      }
       tr = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html().replace(/[^0-9.]/g, "");
       callback(bigNumber(tr));
     });

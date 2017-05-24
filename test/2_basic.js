@@ -50,22 +50,21 @@
         },
         ltc: {
           address: "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T",
-          balance: bigNumber("7601.11229246")
+          balance: bigNumber("11238.41463408")
         },
         btc: {
           address: '16oZmpFVHpXVgyegWYXg4zNFhXVxYJemmY',
-          balance: bigNumber("31.31659632")
+          balance: bigNumber("31.6455421")
         }
       };
       checkBalance = function(coin, callback){
         var acc, provider;
-        console.log('1.1', coin);
         acc = accs[coin];
         provider = main.balance[coin];
         return provider(acc.address, function(balance){
           var err;
-          expect(balance).toNotBe(null, "Balance is null for " + coin);
           try {
+            expect(balance).toNotBe(null, "Balance is null for " + coin);
             expect(balance.eq(acc.balance)).toBe(true, "real balance " + balance.toString() + " is not expected " + acc.balance.toString() + " for " + coin);
           } catch (e$) {
             err = e$;
@@ -78,17 +77,13 @@
         if (coins.length === 0) {
           return callback();
         }
-        console.log('1', coins[0]);
         return checkBalance(coins[0], function(){
           var tail;
-          console.log('2', coins[0]);
           tail = p.tail(
           coins);
-          console.log('3', coins[0]);
           if (tail.length === 0) {
             return callback();
           }
-          console.log('4', coins[0]);
           checkBalances(tail, function(){
             callback();
           });

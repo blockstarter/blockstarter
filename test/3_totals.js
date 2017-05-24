@@ -48,7 +48,7 @@
     });
     return it('add-address', function(done){
       var rate, getRate, accs, total, state, i$, ref$, len$, key;
-      this.timeout(5000);
+      this.timeout(15000);
       rate = 2;
       getRate = function(callback){
         return callback(rate);
@@ -60,11 +60,11 @@
         },
         ltc: {
           address: "LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T",
-          balance: bigNumber("7601.11229246")
+          balance: bigNumber("11238.41463408")
         },
         btc: {
           address: '16oZmpFVHpXVgyegWYXg4zNFhXVxYJemmY',
-          balance: bigNumber("31.31659632")
+          balance: bigNumber("31.6455421")
         }
       };
       total = main.total({
@@ -97,7 +97,7 @@
           expect(result.totalUsd).toBe(state.expectTotal.toString(), "Total Amount USD is wrong}");
           done();
         });
-      }, 2000);
+      }, 4000);
     });
   });
 }).call(this);
