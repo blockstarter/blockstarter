@@ -50,9 +50,9 @@ describe \Totals, (...)->
           expect-total: big-number 0
         for key in Object.keys(accs)
            total.items[key].add-address accs[key].address
-        total.start-collect!
+        total.collect.start!
         <-! set-timeout _, 2000
-        total.stop-collect!
+        total.collect.stop!
         result <-! total.totals
         expect(result.details.length).to-be(3)
         for detail in result.details

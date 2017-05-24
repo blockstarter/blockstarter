@@ -5,13 +5,11 @@ module.exports = (calc, rates)-->
        big-number 0
    items = calc!
    coins = Object.keys items
-   start-collect = ->
+   start = ->
        coins |> p.each -> items[it].start!
-   stop-collect = ->
+   stop = ->
        coins |> p.each -> items[it].stop!
-   build-total = (item, name)->
-       name: name
-       total: item.total!
+   collect = { start, stop }
    calc-total = (names, callback)->
        [head, ...tail] = names
        return callback [] if not head?
@@ -44,8 +42,7 @@ module.exports = (calc, rates)-->
        done result
            
    { 
-   start-collect
-   stop-collect
+   collect
    totals
    items 
    }
