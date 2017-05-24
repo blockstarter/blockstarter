@@ -1,0 +1,42 @@
+{
+  "name": "blockstarter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/main.js",
+  "dependencies": {
+    "big-number": "^0.4.0",
+    "bitcoin-address": "^0.3.0",
+    "bitcoinjs-lib": "^3.0.3",
+    "bitcore-lib": "^0.14.0",
+    "bitcore-message": "^1.0.4",
+    "cheerio": "^0.22.0",
+    "coininfo": "^1.0.0",
+    "coinkey": "^2.0.0",
+    "ethereumjs-util": "^5.1.1",
+    "expect": "^1.20.2",
+    "request": "^2.81.0",
+    "secure-random": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": [
+      "sh test.sh"
+    ],
+    "main": "lsc -co ./main ./src/main/*.ls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blockstarter/blockstarter.git"
+  },
+  "keywords": [
+    "bitcoin",
+    "blockchain",
+    "ico"
+  ],
+  "author": "Blockstarter.co",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blockstarter/blockstarter/issues"
+  },
+  "homepage": "https://github.com/blockstarter/blockstarter#readme"
+}
