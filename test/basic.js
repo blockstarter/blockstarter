@@ -4,27 +4,29 @@
   main = require('../main/main.js');
   bigNumber = require('big-number');
   expect = require('expect');
-  describe('Basic', function(_){
+  describe('Basic', function(){
     it('exists', function(){
-      var i$, ref$, len$, coin, provider;
+      var i$, ref$, len$, coin, provider, results$ = [];
       for (i$ = 0, len$ = (ref$ = ['eth', 'btc', 'ltc']).length; i$ < len$; ++i$) {
         coin = ref$[i$];
         provider = main.newAddr[coin];
         expect(provider().address).toBeA("string", "Not string Address " + coin);
-        expect(provider().privateKey).toBeA("string", "Not string Private Key " + coin);
+        results$.push(expect(provider().privateKey).toBeA("string", "Not string Private Key " + coin));
       }
+      return results$;
     });
     it('unique', function(){
-      var i$, ref$, len$, coin, provider;
+      var i$, ref$, len$, coin, provider, results$ = [];
       for (i$ = 0, len$ = (ref$ = ['eth', 'btc', 'ltc']).length; i$ < len$; ++i$) {
         coin = ref$[i$];
         provider = main.newAddr[coin];
         expect(provider().address).toNotBe(provider().address, "Not unique Private Key " + coin);
-        expect(provider().privateKey).toNotBe(provider().privateKey, "Not unique Private Key " + coin);
+        results$.push(expect(provider().privateKey).toNotBe(provider().privateKey, "Not unique Private Key " + coin));
       }
+      return results$;
     });
     it('valid', function(){
-      var i$, ref$, len$, coin, provider, ref1$, address, privateKey, valid, message, signature;
+      var i$, ref$, len$, coin, provider, ref1$, address, privateKey, valid, message, signature, results$ = [];
       for (i$ = 0, len$ = (ref$ = ['eth', 'btc', 'ltc']).length; i$ < len$; ++i$) {
         coin = ref$[i$];
         provider = main.newAddr[coin];
@@ -33,11 +35,13 @@
         expect(valid).toBe(true, "Invalid Ethereum Address " + coin);
         message = "Test Message";
         signature = main.sign[coin].sign(message, privateKey);
-        expect(main.sign[coin].verify(message, address, signature)).toBe(true);
+        results$.push(expect(main.sign[coin].verify(message, address, signature)).toBe(true));
       }
+      return results$;
     });
     it('balance', function(done){
       var accs, coins, checkBalance, checkBalances;
+      this.timeout(3000);
       accs = {
         eth: {
           address: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe",
@@ -73,16 +77,17 @@
           }
         });
       };
-      checkBalances(coins, done);
+      return checkBalances(coins, done);
     });
-    it('rates', function(done){
+    return it('rates', function(done){
       var coins, checkRate, checkRates;
+      this.timeout(5000);
       coins = ['eth', 'btc', 'ltc'];
       checkRate = function(coin, callback){
         var provider;
         provider = main.rate[coin];
         return provider(function(rate){
-          expect(rate).toBeA("number");
+          expect(rate).toBeA('number');
           callback(rate);
         });
       };
@@ -90,14 +95,13 @@
         var head, tail;
         head = coins[0], tail = slice$.call(coins, 1);
         return checkRate(head, function(){
-          if (tail.length > 0) {
-            checkRates(tail, callback);
-          } else {
-            callback();
+          if (tail.length === 0) {
+            return callback();
           }
+          checkRates(tail, callback);
         });
       };
-      checkRates(coins, done);
+      return checkRates(coins, done);
     });
   });
 }).call(this);

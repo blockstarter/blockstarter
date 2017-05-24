@@ -3,20 +3,20 @@ big-number = require \big-number
 
 expect = require \expect
 
-describe 'Basic', !(_)->
-  it \exists, !->
+describe 'Basic', (...)->
+  it \exists, ->
     for coin in [\eth, \btc, \ltc]
        provider = main.new-addr[coin]
        #expect(provider!.public).to-be-a("string", "Not string Public Key #{coin}")
        expect(provider!.address).to-be-a("string", "Not string Address #{coin}")
        expect(provider!.private-key).to-be-a("string", "Not string Private Key #{coin}")
-  it \unique, !->
+  it \unique, ->
     for coin in [\eth, \btc, \ltc]
        provider = main.new-addr[coin]
        #expect(provider!.public).to-not-be(provider!.public, "Not unique Public Key #{coin}")
        expect(provider!.address).to-not-be(provider!.address, "Not unique Private Key #{coin}")
        expect(provider!.private-key).to-not-be(provider!.private-key, "Not unique Private Key #{coin}")
-  it \valid, !->
+  it \valid, ->
     for coin in [\eth, \btc, \ltc]
       provider = main.new-addr[coin]
       { address, private-key } = provider!
@@ -27,7 +27,8 @@ describe 'Basic', !(_)->
         main.sign[coin].sign message, private-key
         
       expect(main.sign[coin].verify(message, address, signature)).to-be yes
-  it \balance, (done)!->
+  it \balance, (done)->
+    @timeout 3000
     accs =
       eth: 
         address: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe"
@@ -53,18 +54,18 @@ describe 'Basic', !(_)->
       else
          callback!
     check-balances coins, done
-  it \rates, (done)!->
+  it \rates, (done)->
+    @timeout 5000
     coins = [\eth, \btc, \ltc]
     check-rate = (coin, callback)->
         provider = main.rate[coin]
         rate <-! provider!
-        expect(rate).to-be-a("number")
+        expect(rate).to-be-a(\number)
         callback rate
     check-rates = (coins, callback)->
       [head, ...tail] = coins
       <-! check-rate head
-      if tail.length > 0
-         check-rates tail, callback
-      else
-         callback!
+      return callback! if tail.length is 0
+      check-rates tail, callback
+         
     check-rates coins, done
