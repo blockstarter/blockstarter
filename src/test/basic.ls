@@ -73,5 +73,4 @@ describe 'Basic', (...)->
       <-! check-rate head
       return callback! if tail.length is 0
       check-rates tail, callback
-         
     check-rates coins, done

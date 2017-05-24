@@ -52,6 +52,7 @@ describe \Totals, (...)->
            total.items[key].add-address accs[key].address
         total.start-collect!
         <-! set-timeout _, 2000
+        total.stop-collect!
         result <-! total.totals
         expect(result.details.length).to-be(3)
         for detail in result.details
