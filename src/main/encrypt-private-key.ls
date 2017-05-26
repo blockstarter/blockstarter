@@ -6,8 +6,10 @@ export genpass = (cb)->
 
 export encrypt = (string, key, cb)->
   err, encrypted <-! crypto2.encrypt string, key
-  cb encrypted
+  err, encrypted2 <-! crypto2.encrypt.aes256cbc encrypted, key
+  cb encrypted2
   
 export decrypt = (string, key, cb)->
-  err, decrypted <-! crypto2.decrypt string, key
+  err, decrypted2 <-! crypto2.encrypt.aes256cbc string, key
+  err, decrypted <-! crypto2.decrypt decrypted2, key
   cb decrypted
