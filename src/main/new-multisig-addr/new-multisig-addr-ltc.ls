@@ -1,0 +1,1 @@
+#https://github.com/bitcoinjs/bitcoinjs-lib/blob/d853806/test/integration/multisig.js#L9

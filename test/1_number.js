@@ -8,6 +8,7 @@
       expect(bigNumber(5).toString()).toBe("5");
       expect(bigNumber("5").toString()).toBe("5");
       expect(bigNumber("7601.11229246").toString()).toBe("7601.11229246");
+      expect(bigNumber("-7601.11229246").toString()).toBe("-7601.11229246");
       return expect(bigNumber("802672.276608465139479303").toString()).toBe("802672.276608465139479303");
     });
   });

@@ -4,21 +4,23 @@ p = require \prelude-ls
 
 expect = require \expect
 
+all-coins = [\eth, \btc, \ltc]
+
 describe 'Basic', (...)->
   it \exists, ->
-    for coin in [\eth, \btc, \ltc]
+    for coin in all-coins
        provider = main.new-addr[coin]
        #expect(provider!.public).to-be-a("string", "Not string Public Key #{coin}")
        expect(provider!.address).to-be-a("string", "Not string Address #{coin}")
        expect(provider!.private-key).to-be-a("string", "Not string Private Key #{coin}")
   it \unique, ->
-    for coin in [\eth, \btc, \ltc]
+    for coin in all-coins
        provider = main.new-addr[coin]
        #expect(provider!.public).to-not-be(provider!.public, "Not unique Public Key #{coin}")
        expect(provider!.address).to-not-be(provider!.address, "Not unique Private Key #{coin}")
        expect(provider!.private-key).to-not-be(provider!.private-key, "Not unique Private Key #{coin}")
   it \valid, ->
-    for coin in [\eth, \btc, \ltc]
+    for coin in all-coins
       provider = main.new-addr[coin]
       { address, private-key } = provider!
       valid = provider.verify address
@@ -29,7 +31,7 @@ describe 'Basic', (...)->
         
       expect(main.sign[coin].verify(message, address, signature)).to-be yes
   it \balance, (done)!->
-    @timeout 15000
+    @timeout 25000
     accs =
       eth: 
         address: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe"
@@ -59,16 +61,16 @@ describe 'Basic', (...)->
          return callback!
       <-! check-balances tail
       callback!
-    <-! check-balances [\eth, \btc, \ltc]
+    <-! check-balances all-coins
     console.log \done
     done!
   it \rates, (done)->
     @timeout 5000
-    coins = [\eth, \btc, \ltc]
+    coins = all-coins
     check-rate = (coin, callback)->
         provider = main.rate[coin]
         rate <-! provider!
-        expect(rate).to-be-a(\number)
+        expect rate .to-be-a \number
         callback rate
     check-rates = (coins, callback)->
       [head, ...tail] = coins

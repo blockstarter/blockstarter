@@ -18,8 +18,12 @@ new-addr =
     eth: require \./new-addr/new-addr-eth.js
     btc: require \./new-addr/new-addr-btc.js
     ltc: require \./new-addr/new-addr-ltc.js
+
+encrypt-private-key = require \./encrypt-private-key.js    
+
 total = require(\./total/total.js) calc
 export {
+  encrypt-private-key
   new-addr
   sign
   balance

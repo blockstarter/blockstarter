@@ -39,7 +39,7 @@ module.exports = (get-amount)->
     status = ->
         if state.paused then \paused else \running
     get-address = (address)->
-        amounts |> p.find (-> it.0 is address)
+        amounts |> p.find (.0 is address)
     add-address = (address)->
         return if get-address(address)?
         amounts.push [address, zero!]

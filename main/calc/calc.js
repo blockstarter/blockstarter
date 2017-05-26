@@ -72,6 +72,7 @@
       }
     };
     getAddress = function(address){
+      var this$ = this;
       return p.find(function(it){
         return it[0] === address;
       })(
