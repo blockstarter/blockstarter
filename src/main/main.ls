@@ -1,7 +1,7 @@
 balance =
     ltc: require \./balance/balance-ltc.js
     btc: require \./balance/balance-btc.js
-    eth: require \./balance/balance-eth.js
+    eth: require \./balance/balance-eth/balance-eth.js
 calc = ->
     ltc: require(\./calc/calc.js) balance~ltc
     btc: require(\./calc/calc.js) balance~btc

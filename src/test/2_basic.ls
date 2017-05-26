@@ -62,7 +62,7 @@ describe 'Basic', (...)->
       <-! check-balances tail
       callback!
     <-! check-balances all-coins
-    console.log \done
+    #console.log \done
     done!
   it \rates, (done)->
     @timeout 5000

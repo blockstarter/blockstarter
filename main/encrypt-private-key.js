@@ -6,7 +6,7 @@
   out$.encrypt = encrypt = function(string, key){
     var decoded;
     decoded = wif.decode(string);
-    return bip38.encrypt(decoded.privateKey, decoded.compressed, key);
+    return bip38.encrypt(128, decoded.privateKey, decoded.compressed, key);
   };
   out$.decrypt = decrypt = function(string, key){
     var progress, decryptedKey;

@@ -5,7 +5,7 @@ wif = require \wif
 
 export encrypt = (string, key)->
   decoded = wif.decode string
-  bip38.encrypt decoded.private-key, decoded.compressed, key
+  bip38.encrypt 128, decoded.private-key, decoded.compressed, key
 export decrypt = (string, key)->
   progress = (status)->
       #console.log("decoding: #{status.percent}%")

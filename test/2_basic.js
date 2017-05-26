@@ -91,7 +91,6 @@
         });
       };
       checkBalances(allCoins, function(){
-        console.log('done');
         done();
       });
     });

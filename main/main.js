@@ -4,7 +4,7 @@
   balance = {
     ltc: require('./balance/balance-ltc.js'),
     btc: require('./balance/balance-btc.js'),
-    eth: require('./balance/balance-eth.js')
+    eth: require('./balance/balance-eth/balance-eth.js')
   };
   calc = function(){
     return {

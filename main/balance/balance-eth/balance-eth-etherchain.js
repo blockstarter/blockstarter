@@ -4,19 +4,19 @@
   request = require('request');
   cheerio = require('cheerio');
   bigNumber = require('big.js');
-  iserror = require('../iserror.js');
+  iserror = require('../../iserror.js');
   module.exports = function(key, callback){
-    return request("https://blockchain.info/address/" + key, function(err, response){
+    return request("https://etherchain.org/account/" + key, function(err, response){
       var $, html, tr;
-      if (iserror(err, "Balance btc " + key)) {
+      if (iserror(err, "Balance eth " + key)) {
         return callback(null);
       }
       $ = cheerio.load(response.body);
-      html = $('#final_balance span').html();
+      html = $('#account>.table tr>td').eq(1).html();
       if (html == null) {
         return callback(null);
       }
-      tr = $('#final_balance span').html().replace(/[^0-9.]/g, "");
+      tr = html.match("^[0-9.]+")[0];
       callback(bigNumber(tr));
     });
   };
