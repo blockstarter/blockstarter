@@ -24,7 +24,7 @@ describe 'Basic', (...)->
       provider = main.new-addr[coin]
       { address, private-key } = provider!
       valid = provider.verify address
-      expect valid .to-be yes, "Invalid Ethereum Address #{coin}"
+      expect valid .to-be yes, "Invalid #{coin} Address"
       message = "Test Message"
       signature =
         main.sign[coin].sign message, private-key

@@ -1,5 +1,5 @@
 coininfo = require \coininfo
-CoinKey = require('coinkey')
+CoinKey = require \coinkey
 
 gen = (type)->
     info =

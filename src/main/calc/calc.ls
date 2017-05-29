@@ -1,5 +1,6 @@
 p = require \prelude-ls
 big-number = require \big.js
+iserror = (require \../iserror.js) \calc_module
 
 module.exports = (get-amount)->
     amounts = []
@@ -21,11 +22,11 @@ module.exports = (get-amount)->
            | state.current >= max-index => 0
            | _ => state.current + 1
     collect = ->
-        
         return if amounts.length is 0
         return if state.paused
         item = amounts[state.current]
         err, amount <-! get-amount item.0
+        iserror err
         if amount?
           item.1 = amount
         next-index!

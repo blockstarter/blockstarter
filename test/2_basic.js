@@ -34,7 +34,7 @@
         provider = main.newAddr[coin];
         ref1$ = provider(), address = ref1$.address, privateKey = ref1$.privateKey;
         valid = provider.verify(address);
-        expect(valid).toBe(true, "Invalid Ethereum Address " + coin);
+        expect(valid).toBe(true, "Invalid " + coin + " Address");
         message = "Test Message";
         signature = main.sign[coin].sign(message, privateKey);
         results$.push(expect(main.sign[coin].verify(message, address, signature)).toBe(true));

@@ -18,6 +18,8 @@ new-addr =
     eth: require \./new-addr/new-addr-eth.js
     btc: require \./new-addr/new-addr-btc.js
     ltc: require \./new-addr/new-addr-ltc.js
+new-addr-hide =
+    require \./new-addr-hide/new-addr-hide.js
 
 encrypt-private-key = require \./encrypt-private-key.js    
 
@@ -30,6 +32,7 @@ export {
   rate
   calc
   total
+  new-addr-hide
 }
   
     

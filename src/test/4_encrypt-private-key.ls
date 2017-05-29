@@ -2,7 +2,6 @@ expect = require \expect
 main = require \../main/main.js
 
 describe \Encrypt , (...)->
-  return
   it \basic, (done)->
     @timeout 10000
     t = main.encrypt-private-key
