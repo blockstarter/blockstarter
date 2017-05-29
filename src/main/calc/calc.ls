@@ -25,7 +25,7 @@ module.exports = (get-amount)->
         return if amounts.length is 0
         return if state.paused
         item = amounts[state.current]
-        amount <-! get-amount item.0
+        err, amount <-! get-amount item.0
         if amount?
           item.1 = amount
         next-index!

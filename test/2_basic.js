@@ -63,7 +63,6 @@
         acc = accs[coin];
         provider = main.balance[coin];
         return provider(acc.address, function(err, balance){
-          console.log('balance', err, balance);
           try {
             expect(err).toBe(null);
             expect(balance).toNotBe(null, "Balance is null for " + coin);

@@ -5,7 +5,6 @@
   bigNumber = require('big.js');
   expect = require('expect');
   describe('Totals', function(){
-    return;
     it('empty', function(done){
       var total;
       this.timeout(10000);

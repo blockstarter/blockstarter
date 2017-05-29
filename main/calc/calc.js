@@ -48,7 +48,7 @@
         return;
       }
       item = amounts[state.current];
-      return getAmount(item[0], function(amount){
+      return getAmount(item[0], function(err, amount){
         if (amount != null) {
           item[1] = amount;
         }
