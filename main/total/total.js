@@ -26,23 +26,29 @@
       start: start,
       stop: stop
     };
-    calcTotal = function(names, callback){
+    calcTotal = function(arg$, cb){
       var head, tail, total;
-      head = names[0], tail = slice$.call(names, 1);
+      head = arg$[0], tail = slice$.call(arg$, 1);
       if (head == null) {
-        return callback([]);
+        return cb(null, []);
       }
       total = items[head].total();
-      return rates[head](function(usd){
+      return rates[head](function(err, usd){
         var item;
+        if (err != null) {
+          return cb(err);
+        }
         item = {
           name: head,
           amount: total,
           amountUsd: bigNumber(usd).times(total),
           rate: usd
         };
-        calcTotal(tail, function(rest){
-          callback([item].concat(rest));
+        calcTotal(tail, function(err, rest){
+          if (err != null) {
+            return cb(err);
+          }
+          cb(null, [item].concat(rest));
         });
       });
     };
@@ -58,8 +64,11 @@
       };
     };
     totals = function(done){
-      return calcTotal(coins, function(items){
+      return calcTotal(coins, function(err, items){
         var totalUsd, result, this$ = this;
+        if (err != null) {
+          return done(err);
+        }
         totalUsd = p.foldl(sum, zero())(
         p.map(function(it){
           return it.amountUsd;
@@ -70,7 +79,7 @@
           details: p.map(renderTotal)(
           items)
         };
-        done(result);
+        done(null, result);
       });
     };
     return {

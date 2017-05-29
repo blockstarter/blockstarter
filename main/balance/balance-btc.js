@@ -4,11 +4,11 @@
   request = require('request');
   cheerio = require('cheerio');
   bigNumber = require('big.js');
-  iserror = require('../iserror.js');
+  iserror = require('../iserror.js')('https://blockchain.info');
   module.exports = function(key, callback){
     return request("https://blockchain.info/address/" + key, function(err, response){
       var $, html, tr;
-      if (iserror(err, "Balance btc " + key)) {
+      if (iserror(err, "Failed to get balance of BTC address " + key)) {
         return callback(null);
       }
       $ = cheerio.load(response.body);
@@ -17,7 +17,7 @@
         return callback(null);
       }
       tr = $('#final_balance span').html().replace(/[^0-9.]/g, "");
-      callback(bigNumber(tr));
+      callback(err, bigNumber(tr));
     });
   };
 }).call(this);

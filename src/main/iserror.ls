@@ -6,7 +6,8 @@ slack = new SlackWebhook do
         channel: '#bot'
         icon_emoji: ':robot_face:'
 
-module.exports = (err, more-info)->
+module.exports = (service-name, err, details) -->
     if err?
-      slack.send "Error: #{err.message ? err} #{more-info ? ''}"
+        err-details = "; #details" if details?
+        slack.send "[#{service-name}] Error: #{err.message ? err}#{err-details}"
     err?

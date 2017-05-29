@@ -14,6 +14,7 @@ module.exports = (type)->
       address: \0x + addr-buff.to-string \hex
       private-key: priv-key-buff.to-string \hex
       public: pub-buff.to-string \hex
+
 module.exports.verify = (str)->
   pattern = \0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe
   pattern.length is str.length and str.substr(0, 2) is "0x"

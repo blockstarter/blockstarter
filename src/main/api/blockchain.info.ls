@@ -1,12 +1,12 @@
 # Docs: https://blockchain.info/api/api_websocket
 fs = require \fs
 p = require \prelude-ls
+iserror = (require \../iserror.js) 'wss://ws.blockchain.info'
 
 # I don't know where to use API key. Cannot find in API docs.
 apiKey = \936e3ef9-7781-47ec-86d2-260804c1920f
 
 btcAdrs = require \../data/btc-adrs.json
-btcActiveAdrs = require \../data/btc-active-adrs.json
 
 WebSocket = require \ws
 ws = new WebSocket \wss://ws.blockchain.info/inv
@@ -24,18 +24,15 @@ cmd =
   subsToAdr: (-> op: \addr_sub", addr: it) >> send
   ping: (-> op: \ping) >> send
 
-
 max = 100000
 addresses =
-    btcAdrs |> p.map (.address)
-            |> p.drop 0 
+    btcAdrs |> p.drop 0 
             |> p.take max
 
 subsToKnownAdrs = ->
-    all = 
-      addresses ++ btcActiveAdrs
-    console.log "Subscribe to #{all.length} BTC addresses"
-    all |> p.each cmd.subsToAdr
+    console.log "Subscribe to #{addresses.length} BTC addresses"
+    addresses |> p.map (.address)
+              |> p.each cmd.subsToAdr
 
 map-filter = (func, list)-->
   list |> p.map func 
@@ -66,15 +63,16 @@ init = ->
   subsToKnownAdrs!
 
 received = (data) ->
-      json = JSON.parse data
-      switch json.op
+    json = JSON.parse data
+    switch json.op
         case \pong
-          store \ping, data
-          console.log 'pong ' + new Date!
+            store \ping, data
+            console.log 'pong ' + new Date!
         else
-         console.log '[ws.blockchain.info] received message: ' + data
-         store \changes, data
-         checkBalances data
+            console.log '[ws.blockchain.info] received message: ' + data
+            store \changes, data
+            checkBalances data
+        
 exit = ->
     console.log '[ws.blockchain.info] closing connection'
 

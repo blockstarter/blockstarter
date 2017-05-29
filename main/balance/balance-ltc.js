@@ -3,15 +3,15 @@
   var request, bigNumber, iserror;
   request = require('request');
   bigNumber = require('big.js');
-  iserror = require('../iserror.js');
+  iserror = require('../iserror.js')('http://ltc.blockr.io');
   module.exports = function(key, callback){
     return request("http://ltc.blockr.io/api/v1/address/info/" + key, function(err, response, body){
       var data;
-      if (iserror(err, "Balance ltc " + key)) {
+      if (iserror(err, "Failed to get balance of LTC address " + key)) {
         return callback(null);
       }
       data = JSON.parse(body);
-      callback(bigNumber(data.data.balance));
+      callback(err, bigNumber(data.data.balance));
     });
   };
 }).call(this);

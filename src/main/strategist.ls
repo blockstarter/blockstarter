@@ -1,9 +1,11 @@
-go = (strategies, key, callback)-->
-    [head, ...tail] = strategies
-    return callback null if not head?
-    result <-! head key
-    return callback result if result isnt null
-    next-result <-! go tail, key
-    callback next-result
+iserror = (require \./iserror.js) 'strategist'
 
-module.exports = go
+strategist = ([func, ...tail], value, cb) -->
+    return cb null if not func?
+    err, result <-! func value
+    return cb err, result if not err?
+    err, last-result <-! strategist tail, value
+    return cb err if iserror err, "Last Strategy didn't work"
+    cb err, last-result
+
+module.exports = strategist

@@ -5,7 +5,7 @@
   p = require('prelude-ls');
   out$.genpass = genpass = function(cb){
     return crypto2.createPassword(function(err, password){
-      cb(password);
+      cb(err, password);
     });
   };
   algorithms = [[bind$(crypto2, 'encrypt'), bind$(crypto2, 'decrypt')], [bind$(crypto2.encrypt, 'aes256cbc'), bind$(crypto2.decrypt, 'aes256cbc')]];
@@ -13,11 +13,14 @@
     var head, tail;
     head = arg$[0], tail = slice$.call(arg$, 1);
     if (head == null) {
-      return cb(string);
+      return cb(null, string);
     }
     return head[index](string, key, function(err, current){
-      encryptDecrypt(index, tail, current, key, function(final){
-        cb(final);
+      if (err != null) {
+        return err;
+      }
+      encryptDecrypt(index, tail, current, key, function(err, final){
+        cb(err, final);
       });
     });
   });

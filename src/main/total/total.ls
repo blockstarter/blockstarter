@@ -10,18 +10,19 @@ module.exports = (calc, rates)-->
    stop = ->
        coins |> p.each -> items[it].stop!
    collect = { start, stop }
-   calc-total = (names, callback)->
-       [head, ...tail] = names
-       return callback [] if not head?
+   calc-total = ([head, ...tail], cb)->
+       return cb null, [] if not head?
        total = items[head].total!
-       usd <-! rates[head]
+       err, usd <-! rates[head]
+       return cb err if err?
        item =
            name: head
            amount: total
            amount-usd: big-number(usd).times total
            rate: usd
-       rest <-! calc-total tail
-       callback([item] ++ rest)
+       err, rest <-! calc-total tail
+       return cb err if err?
+       cb null, ([item] ++ rest)
    sum = (first, second)->
        first.plus second
    render-total = (total)->
@@ -32,7 +33,8 @@ module.exports = (calc, rates)-->
        total.rate
        }
    totals = (done)->
-       items <-! calc-total coins
+       err, items <-! calc-total coins
+       return done err if err?
        total-usd =
            items |> p.map (.amount-usd)
                  |> p.foldl sum, zero!
@@ -40,7 +42,7 @@ module.exports = (calc, rates)-->
        result =
          total-usd: total-usd.to-string!
          details: items |> p.map render-total
-       done result
+       done null, result
            
    { 
    collect

@@ -3,7 +3,7 @@ p = require \prelude-ls
 
 export genpass = (cb)->
   err, password <-! crypto2.create-password
-  cb password
+  cb err, password
 
 algorithms =
   * [crypto2~encrypt, crypto2~decrypt]
@@ -12,10 +12,11 @@ algorithms =
 
 
 encrypt-decrypt = (index, [head, ...tail], string, key, cb)-->
-  return cb string if not head?
+  return cb null, string if not head?
   err, current <-! head[index] string, key
-  final <-! encrypt-decrypt index, tail, current, key
-  cb final
+  return err if err?
+  err, final <-! encrypt-decrypt index, tail, current, key
+  cb err, final
   
 
 export encrypt = encrypt-decrypt 0, algorithms

@@ -2,15 +2,17 @@ expect = require \expect
 main = require \../main/main.js
 
 describe \Encrypt , (...)->
+  return
   it \basic, (done)->
     @timeout 10000
     t = main.encrypt-private-key
     message = "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR"
-    
-    key <-! t.genpass!
-    
-    encrypted <-! t.encrypt message, key
-    decrypted <-! t.decrypt encrypted, key
-    expect(decrypted).to-be(message)
+    err, key <-! t.genpass!
+    expect err .to-be null
+    err, encrypted <-! t.encrypt message, key
+    expect err .to-be null
+    err, decrypted <-! t.decrypt encrypted, key
+    expect err .to-be null
+    expect decrypted .to-be message
     done!
     

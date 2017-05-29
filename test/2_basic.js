@@ -58,62 +58,68 @@
           balance: bigNumber("69370.10701994")
         }
       };
-      checkBalance = function(coin, callback){
+      checkBalance = function(coin, cb){
         var acc, provider;
         acc = accs[coin];
         provider = main.balance[coin];
-        return provider(acc.address, function(balance){
-          var err;
+        return provider(acc.address, function(err, balance){
+          console.log('balance', err, balance);
           try {
+            expect(err).toBe(null);
             expect(balance).toNotBe(null, "Balance is null for " + coin);
             expect(balance.eq(acc.balance)).toBe(true, "real balance " + balance.toString() + " is not expected " + acc.balance.toString() + " for " + coin);
+            cb(null);
           } catch (e$) {
             err = e$;
-            console.log(err);
+            cb(err);
           }
-          callback();
         });
       };
-      checkBalances = function(coins, callback){
+      checkBalances = function(coins, cb){
         if (coins.length === 0) {
-          return callback();
+          return cb(null);
         }
-        return checkBalance(coins[0], function(){
+        return checkBalance(coins[0], function(err){
           var tail;
+          expect(err).toBe(null);
           tail = p.tail(
           coins);
           if (tail.length === 0) {
-            return callback();
+            return cb(null);
           }
-          checkBalances(tail, function(){
-            callback();
+          checkBalances(tail, function(err){
+            expect(err).toBe(null);
+            cb(err);
           });
         });
       };
-      checkBalances(allCoins, function(){
-        done();
+      checkBalances(allCoins, function(err){
+        expect(err).toBe(null);
+        done(null);
       });
     });
     return it('rates', function(done){
       var coins, checkRate, checkRates;
       this.timeout(5000);
       coins = allCoins;
-      checkRate = function(coin, callback){
+      checkRate = function(coin, cb){
         var provider;
         provider = main.rate[coin];
-        return provider(function(rate){
+        return provider(function(err, rate){
+          expect(err).toBe(null);
           expect(rate).toBeA('number');
-          callback(rate);
+          cb(null, rate);
         });
       };
-      checkRates = function(coins, callback){
+      checkRates = function(arg$, cb){
         var head, tail;
-        head = coins[0], tail = slice$.call(coins, 1);
-        return checkRate(head, function(){
-          if (tail.length === 0) {
-            return callback();
-          }
-          checkRates(tail, callback);
+        head = arg$[0], tail = slice$.call(arg$, 1);
+        if (head == null) {
+          return cb(null);
+        }
+        return checkRate(head, function(err){
+          expect(err).toBe(null);
+          checkRates(tail, cb);
         });
       };
       return checkRates(coins, done);

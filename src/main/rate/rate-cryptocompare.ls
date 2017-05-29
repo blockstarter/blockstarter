@@ -1,12 +1,14 @@
 request = require \request
 big-number = require \big.js
-iserror = require \../iserror.js
+iserror = (require \../iserror.js) 'https://min-api.cryptocompare.com'
+cache = require \./rate-cache.js
 
-module.exports = (name, callback)-->
-    err, response, body <-! request "\https://min-api.cryptocompare.com/data/price?fsym=#{name}&tsyms=USD"
-    return callback null if iserror err, "Rate cryptocompare #name"
+module.exports = (currency, cb)-->
+    err, response, body <-! request "https://min-api.cryptocompare.com/data/price?fsym=#{currency}&tsyms=USD"
+    return cb err if iserror err, "Failed to get rate for #{currency}/USD"
     try 
-      data = JSON.parse body
-      callback data.USD
-    catch 
-      callback null
+        usd-rate = (JSON.parse body).USD
+        cache.update currency, usd-rate
+        cb null, usd-rate
+    catch err
+        cb err

@@ -4,14 +4,18 @@
   expect = require('expect');
   main = require('../main/main.js');
   describe('Encrypt', function(){
+    return;
     return it('basic', function(done){
       var t, message;
       this.timeout(10000);
       t = main.encryptPrivateKey;
       message = "5KN7MzqK5wt2TP1fQCYyHBtDrXdJuXbUzm4A9rKAteGu3Qi5CVR";
-      return t.genpass(function(key){
-        t.encrypt(message, key, function(encrypted){
-          t.decrypt(encrypted, key, function(decrypted){
+      return t.genpass(function(err, key){
+        expect(err).toBe(null);
+        t.encrypt(message, key, function(err, encrypted){
+          expect(err).toBe(null);
+          t.decrypt(encrypted, key, function(err, decrypted){
+            expect(err).toBe(null);
             expect(decrypted).toBe(message);
             done();
           });

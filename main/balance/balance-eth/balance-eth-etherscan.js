@@ -4,20 +4,20 @@
   request = require('request');
   cheerio = require('cheerio');
   bigNumber = require('big.js');
-  iserror = require('../../iserror.js');
+  iserror = require('../../iserror.js')('https://etherscan.io');
   module.exports = function(key, callback){
     return request("https://etherscan.io/address/" + key, function(err, response){
       var $, html, tr;
-      if (iserror(err, "Balance eth " + key)) {
-        return callback(null);
+      if (iserror(err, "Failed to get balance of ETH address " + key)) {
+        return callback("Not Found");
       }
       $ = cheerio.load(response.body);
       html = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html();
       if (html == null) {
-        return callback(null);
+        return callback("Not Found");
       }
       tr = html.replace(/[^0-9.]/g, "");
-      callback(bigNumber(tr));
+      callback(null, bigNumber(tr));
     });
   };
 }).call(this);
