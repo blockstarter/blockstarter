@@ -6,21 +6,34 @@ new-addr =
     eth: require \../new-addr/new-addr-eth.js
     btc: require \../new-addr/new-addr-btc.js
     ltc: require \../new-addr/new-addr-ltc.js
-    
+
+firebase = require \firebase
+init-firebase = (url)->
+    if not init-firebase[url]?
+      config =
+         databaseURL: url
+      init-firebase[url] = 
+           firebase.initializeApp config, url
+    init-firebase[url]
 send-data = (url, info, cb)->
-    #TODO
-    #url is address of firebase here.
-    #data should be stored in the firebase and firebase should return 200 ok
-    #then cb null
-    #otherwise cb err
-    cb null
+    app = init-firebase url
+    id = md5 JSON.stringify info
+    request =
+        app.database!
+              .ref \private/ + id
+              .set info
+    success = ->
+        cb null 
+    fail = (err)->
+        cb err
+    request.then success, fail .catch fail
 
 upload-info = ([head, ...tail], info, cb)-->
     return cb null if not head?
     err <-! send-data head, info
     return cb err if err?
     err <-! upload-info tail, info
-    return cb err
+    cb err
 module.exports = (coin, info, cb)-->
     return cb "Key is not defined" if not state.config?
     return cb "You need repos" if not state.config.repos?

@@ -4,7 +4,7 @@
   main = require('../main/main.js');
   bigNumber = require('big.js');
   expect = require('expect');
-  describe('Totals', function(){
+  describe('Totals', function(run){
     it('empty', function(done){
       var total;
       this.timeout(10000);
@@ -53,7 +53,7 @@
         done(null);
       });
     });
-    return it('add-address', function(done){
+    it('add-address', function(done){
       var rate, getRate, accs, total, state, i$, ref$, len$, key;
       this.timeout(8000);
       rate = 2;

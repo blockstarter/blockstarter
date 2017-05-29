@@ -6,7 +6,7 @@
   p = require('prelude-ls');
   expect = require('expect');
   allCoins = ['eth', 'btc', 'ltc'];
-  describe('Basic', function(){
+  describe('Basic', function(run){
     it('exists', function(){
       var i$, ref$, len$, coin, provider, results$ = [];
       for (i$ = 0, len$ = (ref$ = allCoins).length; i$ < len$; ++i$) {
@@ -97,7 +97,7 @@
         done(null);
       });
     });
-    return it('rates', function(done){
+    it('rates', function(done){
       var coins, checkRate, checkRates;
       this.timeout(5000);
       coins = allCoins;

@@ -5,7 +5,7 @@
   main = require('../main/main.js');
   ref$ = main.encryptPrivateKey, encrypt = ref$.encrypt, decrypt = ref$.decrypt;
   p = require('prelude-ls');
-  describe('NewAddrHide', function(){
+  describe('NewAddrHide', function(run){
     it('key_is_not_defined', function(done){
       var email, newAddr, i$, ref$, len$, coin;
       this.timeout(10000);
@@ -46,16 +46,16 @@
         });
       });
     });
-    return it('process', function(done){
+    it('process', function(done){
       var email, newAddr, key, infos, config;
-      this.timeout(10000);
+      this.timeout(15000);
       email = "testmail@gmail.com";
       newAddr = main.newAddrHide;
       key = "8e3dc782fc8375c43f59403a337db4ba";
       infos = [];
       config = {
-        repos: ['blockstarter-235.firebase.com', 'blockstarter-233.firebase.com', 'blockstarter-400.firebase.com'],
-        key: "aasdfsadfasfdsafsf23Pp8j9232"
+        repos: ['https://blockstarter-8e7be.firebaseio.com', 'https://blockstarter2.firebaseio.com'],
+        key: 'aasdfsadfasfdsafsf23Pp8j9232'
       };
       return encrypt(JSON.stringify(config), key, function(err, encryptedConfig){
         expect(err).toBe(null);
@@ -70,11 +70,14 @@
               return cb(null);
             }
             return newAddr(coin, email, function(err, address){
-              var key;
-              expect(err).toBe(null);
-              expect(address).toBeA('string');
-              expect(address.length > 10).toBe(true);
-              key = config.key + coin + JSON.stringify(email);
+              try {
+                expect(err).toBe(null);
+                expect(address).toBeA('string');
+                expect(address.length > 10).toBe(true);
+              } catch (e$) {
+                err = e$;
+                console.error(err);
+              }
               testCoins(tail, cb);
             });
           };

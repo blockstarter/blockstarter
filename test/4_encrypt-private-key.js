@@ -3,8 +3,8 @@
   var expect, main;
   expect = require('expect');
   main = require('../main/main.js');
-  describe('Encrypt', function(){
-    return it('basic', function(done){
+  describe('Encrypt', function(run){
+    it('basic', function(done){
       var t, message;
       this.timeout(10000);
       t = main.encryptPrivateKey;

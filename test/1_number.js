@@ -3,8 +3,8 @@
   var bigNumber, expect;
   bigNumber = require('big.js');
   expect = require('expect');
-  describe('Basic', function(){
-    return it('test-big-number', function(){
+  describe('Basic', function(run){
+    it('test-big-number', function(){
       expect(bigNumber(5).toString()).toBe("5");
       expect(bigNumber("5").toString()).toBe("5");
       expect(bigNumber("7601.11229246").toString()).toBe("7601.11229246");
