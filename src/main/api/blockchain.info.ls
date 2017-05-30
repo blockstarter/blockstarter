@@ -3,7 +3,7 @@ require! {
     fs
     \prelude-ls : \p
 }
-iserror = (require \../iserror.js) 'wss://ws.blockchain.info'
+iserror = (require \../iserror.js) \wss://ws.blockchain.info
 
 # I don't know where to use API key. Cannot find in API docs.
 apiKey = \936e3ef9-7781-47ec-86d2-260804c1920f

@@ -1,4 +1,4 @@
-BlockStarter ICO helper
+BlockStarter white label for contribution campaigns.
 
 Install 
 

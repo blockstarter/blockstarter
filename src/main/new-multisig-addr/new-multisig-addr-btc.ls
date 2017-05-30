@@ -6,7 +6,7 @@ require! {
 }
 
 module.exports = (common-public-key)->
-    console.log \run
+    #console.log \run
     key = new-addr-btc!
     pub-keys =
       * common-public-key
