@@ -1,5 +1,7 @@
-crypto2 = require \crypto2
-p = require \prelude-ls
+require! {
+  crypto2
+  \prelude-ls : \p
+}
 
 export genpass = (cb)->
   err, password <-! crypto2.create-password

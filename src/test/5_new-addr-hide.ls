@@ -1,7 +1,11 @@
-expect = require \expect
-main = require \../main/main.js
+require! { 
+    expect 
+    \../main/main.js
+    \big.js
+    \prelude-ls : \p
+}
+
 { encrypt, decrypt } = main.encrypt-private-key
-p = require \prelude-ls
 
 run <-! describe \NewAddrHide
 
@@ -22,7 +26,7 @@ it \need_at_least_2, (done)->
     repos: []
     key: "aasdfsadfasfdsafsf23Pp8j9232"
   err, encrypted-config <-! encrypt JSON.stringify(config), key
-  expect(err).to-be null
+  expect err .to-be null
   err <-! new-addr.setup encrypted-config
   expect(err).to-be null
   for coin in [\eth, \btc, \ltc]
@@ -41,7 +45,7 @@ it \process, (done)->
       * \https://blockstarter2.firebaseio.com
     key: \aasdfsadfasfdsafsf23Pp8j9232
   err, encrypted-config <-! encrypt JSON.stringify(config), key
-  expect(err).to-be null
+  expect err .to-be null
   err <-! new-addr.setup encrypted-config
   expect(err).to-be null
   coins = [\eth, \btc, \ltc]
@@ -49,8 +53,8 @@ it \process, (done)->
     return cb null if not coin?
     err, address <-! new-addr coin, email
     try
-      expect(err).to-be null
-      expect(address).to-be-a \string
+      expect err .to-be null
+      expect address .to-be-a \string
       expect(address.length > 10).to-be yes
     catch err
       console.error err

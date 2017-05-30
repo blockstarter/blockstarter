@@ -1,11 +1,13 @@
-coininfo = require \coininfo
-CoinKey = require \coinkey
+require! {
+    \coininfo
+    \coinkey
+}
 
 gen = (type)->
     info =
         coininfo type
-    private-key = CoinKey.createRandom(info)
-    ck = new CoinKey private-key.key
+    private-key = coinkey.createRandom(info)
+    ck = new coinkey private-key.key
     private-key: ck.private-key.toString('hex')
     address: ck.public-address 
     

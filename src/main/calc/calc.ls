@@ -1,11 +1,14 @@
-p = require \prelude-ls
-big-number = require \big.js
+require! {
+    \big.js
+    \prelude-ls : \p
+}
+
 iserror = (require \../iserror.js) \calc_module
 
 module.exports = (get-amount)->
     amounts = []
     zero =->
-       big-number(0) 
+       big(0) 
     state =
         paused: yes
         current: 0

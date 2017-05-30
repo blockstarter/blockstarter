@@ -1,5 +1,9 @@
-SlackWebhook = require \slack-webhook
-slack = new SlackWebhook do
+require! { 
+    \slack-webhook
+}
+
+
+slack = new slack-webhook do
     * 'https://hooks.slack.com/services/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'
     * defaults:
         username: 'Bot'

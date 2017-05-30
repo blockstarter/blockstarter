@@ -1,8 +1,9 @@
-main = require \../main/main.js
-big-number = require \big.js
-p = require \prelude-ls
-
-expect = require \expect
+require! { 
+    expect 
+    \../main/main.js
+    \big.js
+    \prelude-ls : \p
+}
 
 all-coins = [\eth, \btc, \ltc]
 
@@ -39,13 +40,13 @@ it \balance, (done)!->
   accs =
     eth: 
       address: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe"
-      balance: big-number "802672.276608465139479303"
+      balance: big "802672.276608465139479303"
     ltc: 
       address: "34Ae29qWAhGGTw3cSNkPygiwsgKbbCatou"
-      balance: big-number "402474.2484"
+      balance: big "402474.2484"
     btc: 
       address: '1HQ3Go3ggs8pFnXuHVHRytPCq5fGG8Hbhx'
-      balance: big-number "69370.10701994"
+      balance: big "69370.10701994"
   check-balance = (coin, cb)->
       acc = accs[coin]
       provider = main.balance[coin]

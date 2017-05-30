@@ -1,6 +1,8 @@
-main = require \../main/main.js
-big-number = require \big.js
-expect = require \expect
+require! { 
+    expect 
+    \../main/main.js
+    \big.js
+}
 
 run <-! describe \Totals
 it \empty, (done)->
@@ -42,17 +44,17 @@ it \add-address, (done)->
     accs =
       eth: 
         address: "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe"
-        balance: big-number "802672.276608465139479303"
+        balance: big "802672.276608465139479303"
       ltc: 
         address: "34Ae29qWAhGGTw3cSNkPygiwsgKbbCatou"
-        balance: big-number "402474.2484"
+        balance: big "402474.2484"
       btc: 
         address: '1HQ3Go3ggs8pFnXuHVHRytPCq5fGG8Hbhx'
-        balance: big-number "69370.10701994"
+        balance: big "69370.10701994"
     total =
        main.total { btc: get-rate, ltc: get-rate, eth: get-rate }
     state =
-      expect-total: big-number 0
+      expect-total: big 0
     for key in Object.keys(accs)
        total.items[key].add-address accs[key].address
     total.collect.start!
@@ -63,7 +65,7 @@ it \add-address, (done)->
     expect(result.details.length).to-be(3)
     for detail in result.details
        acc = accs[detail.name]
-       expect-total = acc.balance.times(big-number rate)
+       expect-total = acc.balance.times(big rate)
        state.expect-total =
             state.expect-total.plus expect-total
        expect(detail.amount).to-be(acc.balance.to-string!, "Total Amount is wrong for #{detail.name} expected #{acc.balance.to-string!} got #{detail.amount}")

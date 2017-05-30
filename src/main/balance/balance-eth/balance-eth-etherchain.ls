@@ -1,6 +1,9 @@
-request = require \request
-cheerio = require \cheerio
-big-number = require \big.js
+require! {
+    \request
+    \cheerio
+    \big.js
+}
+
 iserror = (require \../../iserror.js) 'https://etherchain.org'
 
 # unconfirmed
@@ -14,4 +17,4 @@ module.exports = (key, callback)->
     html = $('#account>.table tr>td').eq(1).html!
     return callback "Value Not Found" if not html?
     tr = html.match("^[0-9\.]+").0
-    callback null, big-number(tr)
+    callback null, big(tr)

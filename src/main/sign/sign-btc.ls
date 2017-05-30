@@ -1,9 +1,11 @@
-bitcore = require \bitcore-lib
-Message = require \bitcore-message
+require! {
+    \bitcore-lib : \bitcore
+    \bitcore-message
+}
 
 module.exports =
     sign: (message, private-key)->
         key = bitcore.PrivateKey private-key
-        Message(message).sign(key)
+        bitcore-message(message).sign(key)
     verify: (message, address, signature)->
-        Message(message).verify(address, signature)
+        bitcore-message(message).verify(address, signature)

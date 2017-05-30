@@ -1,5 +1,7 @@
-expect = require \expect
-main = require \../main/main.js
+require! { 
+    expect 
+    \../main/main.js
+}
 
 run <-! describe \Encrypt
 it \basic, (done)->

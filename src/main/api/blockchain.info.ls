@@ -1,6 +1,8 @@
 # Docs: https://blockchain.info/api/api_websocket
-fs = require \fs
-p = require \prelude-ls
+require! {
+    fs
+    \prelude-ls : \p
+}
 iserror = (require \../iserror.js) 'wss://ws.blockchain.info'
 
 # I don't know where to use API key. Cannot find in API docs.

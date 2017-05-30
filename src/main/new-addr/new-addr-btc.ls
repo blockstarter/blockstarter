@@ -1,5 +1,8 @@
-bitcoin = require \bitcoinjs-lib
-bitcoin-address = require \bitcoin-address
+require! {
+  \bitcoinjs-lib : \bitcoin
+  \bitcoin-address
+}
+
 
 module.exports = ->
   key-pair = bitcoin.ECPair.make-random!

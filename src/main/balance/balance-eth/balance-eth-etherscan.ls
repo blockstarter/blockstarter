@@ -1,6 +1,8 @@
-request = require \request
-cheerio = require \cheerio
-big-number = require \big.js
+require! {
+    \request
+    \cheerio
+    \big.js
+}
 iserror = (require \../../iserror.js) 'https://etherscan.io'
 
 # unconfirmed
@@ -13,4 +15,4 @@ module.exports = (key, callback)->
     html = $('#ContentPlaceHolder1_divSummary .col-md-6 table td').eq(1).html!
     return callback "Not Found" if not html?
     tr = html.replace(/[^0-9.]/g,"")
-    callback null, big-number(tr)
+    callback null, big(tr)

@@ -1,8 +1,11 @@
-p = require \prelude-ls
-big-number = require \big.js
+require! {
+    \prelude-ls : \p
+    \big.js
+}
+
 module.exports = (calc, rates)-->
    zero = ->
-       big-number 0
+       big 0
    items = calc!
    coins = Object.keys items
    start = ->
@@ -18,7 +21,7 @@ module.exports = (calc, rates)-->
        item =
            name: head
            amount: total
-           amount-usd: big-number(usd).times total
+           amount-usd: big(usd).times total
            rate: usd
        err, rest <-! calc-total tail
        return cb err if err?

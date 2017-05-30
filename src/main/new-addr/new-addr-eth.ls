@@ -1,5 +1,7 @@
-crypto = require \crypto
-eth-util = require \ethereumjs-util
+require! {
+    \ethereumjs-util : \eth-util
+    \crypto
+}
 
 
 

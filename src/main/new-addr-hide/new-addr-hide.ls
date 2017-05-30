@@ -1,33 +1,37 @@
-state = 
+require! {
+    md5
+    \../encrypt-private-key.js : \encryptor
+}
+
+state =
     config: null
-md5 = require \md5
-encryptor = require \../encrypt-private-key.js
-new-addr =
+new-addr  =
     eth: require \../new-addr/new-addr-eth.js
     btc: require \../new-addr/new-addr-btc.js
     ltc: require \../new-addr/new-addr-ltc.js
-
-firebase = require \firebase
 init-firebase = (url)->
+    init-firebase.i = init-firebase.i ? require \firebase
     if not init-firebase[url]?
       config =
          databaseURL: url
       init-firebase[url] = 
-           firebase.initializeApp config, url
-    init-firebase[url]
-send-data = (url, info, cb)->
-    app = init-firebase url
-    id = md5 JSON.stringify info
-    request =
-        app.database!
+           init-firebase.i.initialize-app config, url
+    (info)->
+      id = md5 JSON.stringify info
+      init-firebase[url]
+              .database!
               .ref \private/ + id
               .set info
+init-resource = (url)->
+    | url.index-of(\firebaseio.com) > -1 => init-firebase url
+    | _ => throw "Not Supported"
+send-data = (url, info, cb)->
+    request = init-resource(url) info
     success = ->
         cb null 
     fail = (err)->
         cb err
     request.then success, fail .catch fail
-
 upload-info = ([head, ...tail], info, cb)-->
     return cb null if not head?
     err <-! send-data head, info
