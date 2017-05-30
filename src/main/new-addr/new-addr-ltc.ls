@@ -6,10 +6,11 @@ require! {
 gen = (type)->
     info =
         coininfo type
-    private-key = coinkey.createRandom(info)
+    private-key = coinkey.create-random info
     ck = new coinkey private-key.key
     private-key: ck.private-key.toString('hex')
-    address: ck.public-address 
+    address: ck.public-address
+    public: ck.public-hash.to-string \hex
     
 module.exports = (type)->
     

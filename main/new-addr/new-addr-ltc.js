@@ -10,7 +10,8 @@
     ck = new coinkey(privateKey.key);
     return {
       privateKey: ck.privateKey.toString('hex'),
-      address: ck.publicAddress
+      address: ck.publicAddress,
+      'public': ck.publicHash.toString('hex')
     };
   };
   module.exports = function(type){
