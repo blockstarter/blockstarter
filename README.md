@@ -1,6 +1,6 @@
 # Crypto-wallet for ICO campaign
 
-This is a white label solution by BlockStarter to create contribution crypto-wallet that can be usdd in you ICO campaign.
+This is a white label solution to create a contribution crypto-wallet that can be used in your ICO campaign.
 
 ## Install 
 
@@ -47,6 +47,10 @@ blockstarter.rate.eth( (usd) => {
 })
 ```
 
-## More info
+## More code examples
 
-Please check out [./test](./test) folder.
+Please check out [./test](./test) folder for more usage examples.
+
+## Need help or integration?
+
+If you need a help or integration with your sytem, please contact us at [blockstarter.co](http://blockstarter.co)
