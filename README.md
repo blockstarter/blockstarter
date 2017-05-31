@@ -1,4 +1,4 @@
-# Crypto-wallet for ICO
+# Crypto-wallet for ICO campaign
 
 This is a white label solution by BlockStarter to create contribution crypto-wallet that can be usdd in you ICO campaign.
 
