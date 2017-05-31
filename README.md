@@ -16,17 +16,17 @@ npm i blockstarter
 
 let blockstarter = require('blockstarter');
 
-// Get balence of BTC address
+// Get balance of BTC address
 blockstarter.balance.btc('BTC_PUBLIC_ADDRESS', (amount) => {
    console.log(amount.toString());
 })
 
-// Get balence of LTC address
+// Get balance of LTC address
 blockstarter.balance.ltc('LTC_PUBLIC_ADDRESS', (amount) => {
    console.log(amount.toString());
 })
 
-// Get balence of ETH address
+// Get balance of ETH address
 blockstarter.balance.eth('ETH_PUBLIC_ADDRESS', (amount) => {
    console.log(amount.toString());
 })
