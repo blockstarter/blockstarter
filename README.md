@@ -12,10 +12,15 @@ npm i blockstarter
 
 ## Usage
 
+In your Nodejs project:
+
 ```Javascript
-
 let blockstarter = require('blockstarter');
+```
 
+### Get balance of cryptocurrency address
+
+```js
 // Get balance of BTC address
 blockstarter.balance.btc('BTC_PUBLIC_ADDRESS', (amount) => {
    console.log(amount.toString());
@@ -30,7 +35,11 @@ blockstarter.balance.ltc('LTC_PUBLIC_ADDRESS', (amount) => {
 blockstarter.balance.eth('ETH_PUBLIC_ADDRESS', (amount) => {
    console.log(amount.toString());
 })
+```
 
+### Get cryptocurrency rates
+
+```js
 // Get BTC/USD rate
 blockstarter.rate.btc( (usd) => {
    console.log(usd);
