@@ -1,47 +1,52 @@
-BlockStarter white label for contribution campaigns.
+# Crypto-wallet for ICO
 
-Install 
+This is a white label solution by BlockStarter to create contribution crypto-wallet that can be usdd in you ICO campaign.
+
+## Install 
+
+NodeJS is required.
 
 ```
 npm i blockstarter
 ```
 
-Usage
+## Usage
 
 ```Javascript
 
-var blockstarter = require('blockstarter');
+let blockstarter = require('blockstarter');
 
-//balences
-blockstarter.balance.btc("BTC_PUBLIC_ADDRESS", (amount)=> {
-   console.log(amount.toString());
-})
-   
-blockstarter.balance.ltc("BTC_PUBLIC_ADDRESS", (amount)=> {
+// Get balence of BTC address
+blockstarter.balance.btc("BTC_PUBLIC_ADDRESS", (amount) => {
    console.log(amount.toString());
 })
 
-blockstarter.balance.eth("BTC_PUBLIC_ADDRESS", (amount)=>{
+// Get balence of LTC address
+blockstarter.balance.ltc("LTC_PUBLIC_ADDRESS", (amount) => {
    console.log(amount.toString());
 })
 
+// Get balence of ETH address
+blockstarter.balance.eth("ETH_PUBLIC_ADDRESS", (amount) =>{
+   console.log(amount.toString());
+})
 
-//rates
+// Get BTC/USD rate
 blockstarter.rate.btc( (usd)=> {
    console.log(usd);
 })
-   
+
+// Get LTC/USD rate
 blockstarter.rate.ltc( (usd)=>{
    console.log(usd);
 })
-   
+
+// Get ETH/USD rate
 blockstarter.rate.eth( (usd)=>{
    console.log(usd);
 })
 ```
 
+## More info
 
-More info
-```
-Please check out `test` folder
-```
+Please check out [./test](./test) folder.
