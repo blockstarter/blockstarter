@@ -17,32 +17,32 @@ npm i blockstarter
 let blockstarter = require('blockstarter');
 
 // Get balence of BTC address
-blockstarter.balance.btc("BTC_PUBLIC_ADDRESS", (amount) => {
+blockstarter.balance.btc('BTC_PUBLIC_ADDRESS', (amount) => {
    console.log(amount.toString());
 })
 
 // Get balence of LTC address
-blockstarter.balance.ltc("LTC_PUBLIC_ADDRESS", (amount) => {
+blockstarter.balance.ltc('LTC_PUBLIC_ADDRESS', (amount) => {
    console.log(amount.toString());
 })
 
 // Get balence of ETH address
-blockstarter.balance.eth("ETH_PUBLIC_ADDRESS", (amount) =>{
+blockstarter.balance.eth('ETH_PUBLIC_ADDRESS', (amount) => {
    console.log(amount.toString());
 })
 
 // Get BTC/USD rate
-blockstarter.rate.btc( (usd)=> {
+blockstarter.rate.btc( (usd) => {
    console.log(usd);
 })
 
 // Get LTC/USD rate
-blockstarter.rate.ltc( (usd)=>{
+blockstarter.rate.ltc( (usd) => {
    console.log(usd);
 })
 
 // Get ETH/USD rate
-blockstarter.rate.eth( (usd)=>{
+blockstarter.rate.eth( (usd) => {
    console.log(usd);
 })
 ```
