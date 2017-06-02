@@ -1,5 +1,10 @@
 BlockStarter white label for contribution campaigns.
 
+How to launch ICO? This is tool for it. 
+
+Examples of successful ICO: [http://blockstarter.co](http://blockstarter.co)
+
+
 Install 
 
 ```
@@ -44,4 +49,11 @@ blockstarter.rate.eth( (usd)=>{
 More info
 ```
 Please check out `test` folder
+```
+
+
+Support 
+
+```
+a.stegno@gmail.com
 ```
