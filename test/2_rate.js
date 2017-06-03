@@ -97,6 +97,32 @@
         done();
       });
     });
+    it('rate-history-smarter-1', function(done){
+      var run;
+      this.timeout(8000);
+      run = function(count, date, cb){
+        return main.rateHistory.smarter(d("2017-06-01 23:30"), function(err, result){
+          var nextCount;
+          expect(_(result)).toBe(_({
+            ETH: {
+              BTC: '0.09198971',
+              CHF: '211.30000058'
+            }
+          }));
+          nextCount = count - 1;
+          if (nextCount === 0) {
+            return cb(err, result);
+          }
+          run(nextCount, date, function(err, nextResult){
+            expect(_(result)).toBe(_(nextResult));
+            cb(err, result);
+          });
+        });
+      };
+      return run(50, function(err, result){
+        done();
+      });
+    });
     it('rates-cryptocompare', function(done){
       var coins, checkRate, checkRates;
       this.timeout(5000);
