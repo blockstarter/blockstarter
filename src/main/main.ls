@@ -11,7 +11,7 @@ rate =
     btc: require(\./rate/rate.js) \BTC
     eth: require(\./rate/rate.js) \ETH
 
-rate-history = require \./rate/rate-poloniex.js
+rate-history = require \./rate/rate-history.js
 
 sign =
     eth: require \./sign/sign-eth.js
