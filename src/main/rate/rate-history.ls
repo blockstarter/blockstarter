@@ -41,16 +41,15 @@ get-rates = (ts, cb)->
 cache = {}
 
 get-rates-smarter = (trials, ts, cb)-->
-    return cb cache[ts] if cache[ts]?
+    return cb null, cache[ts] if cache[ts]?
     err, rates <-! get-rates ts
     if !err?
        cache[ts] = rates
        return cb null, rates
-    if trials is 0
-       return cb err
+    return cb err if trials is 0
     next-trials = trials - 1
     get-rates-smarter next-trials, ts, cb
         
-get-rates.smarter = get-rates-smarter 3
+get-rates.smarter = get-rates-smarter 10
 
 module.exports = get-rates

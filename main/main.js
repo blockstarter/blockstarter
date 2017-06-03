@@ -18,7 +18,7 @@
     btc: require('./rate/rate.js')('BTC'),
     eth: require('./rate/rate.js')('ETH')
   };
-  rateHistory = require('./rate/rate-poloniex.js');
+  rateHistory = require('./rate/rate-history.js');
   sign = {
     eth: require('./sign/sign-eth.js'),
     btc: require('./sign/sign-btc.js'),

@@ -64,7 +64,7 @@
   cache = {};
   getRatesSmarter = curry$(function(trials, ts, cb){
     if (cache[ts] != null) {
-      return cb(cache[ts]);
+      return cb(null, cache[ts]);
     }
     return getRates(ts, function(err, rates){
       var nextTrials;
@@ -79,7 +79,7 @@
       getRatesSmarter(nextTrials, ts, cb);
     });
   });
-  getRates.smarter = getRatesSmarter(3);
+  getRates.smarter = getRatesSmarter(10);
   module.exports = getRates;
   function curry$(f, bound){
     var context,
