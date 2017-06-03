@@ -23,8 +23,6 @@
     }
   };
   module.exports.verify = function(address){
-    var pattern;
-    pattern = 'LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T';
-    return address.length === pattern.length;
+    return true;
   };
 }).call(this);

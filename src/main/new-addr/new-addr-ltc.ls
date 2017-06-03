@@ -21,5 +21,6 @@ module.exports = (type)->
          gen \LTC
 
 module.exports.verify = (address)->
-    pattern = \LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T
-    address.length is pattern.length
+    #pattern = \LajyQBeZaBA1NkZDeY8YT5RYYVRkXMvb2T
+    #address.length is pattern.length
+    yes

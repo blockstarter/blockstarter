@@ -4,7 +4,6 @@
   newAddrBtc = require('../new-addr-btc/new-addr-btc.js');
   module.exports = function(commonPublicKey){
     var key, pubKeys, pubKeysBuffer, redeemScript, scriptPubKey, address;
-    console.log('run');
     key = newAddrBtc();
     pubKeys = [commonPublicKey, key['public']];
     pubKeysBuffer = pubKeys.map(function(it){

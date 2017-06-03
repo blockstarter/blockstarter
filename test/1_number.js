@@ -3,7 +3,7 @@
   var expect, big;
   expect = require('expect');
   big = require('big.js');
-  describe('Basic', function(run){
+  describe('Number', function(run){
     it('test-big', function(){
       var s;
       s = function(it){

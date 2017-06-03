@@ -3,6 +3,7 @@ require! {
     \../main/main.js
     \big.js
     \prelude-ls : \p
+    \moment
 }
 
 all-coins = [\eth, \btc, \ltc]
@@ -73,19 +74,3 @@ it \balance, (done)!->
   expect err .to-be null
   #console.log \done
   done null
-
-it \rates, (done)->
-  @timeout 5000
-  coins = all-coins
-  check-rate = (coin, cb)->
-      provider = main.rate[coin]
-      err, rate <-! provider!
-      expect err .to-be null
-      expect rate .to-be-a \number
-      cb null, rate
-  check-rates = ([head, ...tail], cb)->
-    return cb null if not head?
-    err <-! check-rate head
-    expect(err).to-be null
-    check-rates tail, cb
-  check-rates coins, done

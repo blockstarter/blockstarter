@@ -10,6 +10,9 @@ rate =
     ltc: require(\./rate/rate.js) \LTC
     btc: require(\./rate/rate.js) \BTC
     eth: require(\./rate/rate.js) \ETH
+
+rate-history = require \./rate/rate-poloniex.js
+
 sign =
     eth: require \./sign/sign-eth.js
     btc: require \./sign/sign-btc.js
@@ -33,6 +36,7 @@ export {
   calc
   total
   new-addr-hide
+  rate-history
 }
   
     

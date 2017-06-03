@@ -3,7 +3,7 @@ require! {
     \big.js
 }
 
-run <-! describe \Basic
+run <-! describe \Number
 
 it \test-big, ->
   s = -> big(it).to-string!
