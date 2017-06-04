@@ -1,28 +1,14 @@
 {
-  "name": "blockstarter",
-  "version": "0.1.61",
-  "uperversion": "0.1",
-  "subversion": 61,
-  "description": "",
-  "main": "./main/main.js",
+  "devDependencies": {},
   "dependencies": {
-    "prelude-ls": "^1.1.2",
-    "npm": "^4.6.1",
-    "moment": "^2.18.1",
-    "big-number": "^0.4.0",
-    "big.js": "^3.1.3",
-    "bip38": "^2.0.1",
-    "bitcoin-address": "^0.3.0",
-    "bitcoinjs-lib": "^3.0.3",
-    "crypto2": "^0.3.2",
-    "ethereumjs-util": "^5.1.1",
-    "expect": "^1.20.2",
-    "firebase": "^4.0.0",
-    "install": "^0.10.1",
-    "md5": "^2.2.1",
-    "blockchain.info": "^2.8.0",
-    "bitcore-message": "^1.0.4",
     "bitcore-lib": "^0.14.0",
+    "bitcore-message": "^1.0.4",
+    "blockchain.info": "^2.8.0",
+    "md5": "^2.2.1",
+    "install": "^0.10.1",
+    "firebase": "^4.0.0",
+    "expect": "^1.20.2",
+    "ethereumjs-util": "^5.1.1",
     "request": "^2.81.0",
     "secure-random": "^1.1.1",
     "slack-webhook": "^1.0.0",
@@ -30,26 +16,39 @@
     "ws": "^3.0.0",
     "cheerio": "^0.22.0",
     "coininfo": "^1.0.0",
-    "coinkey": "^2.0.0"
+    "coinkey": "^2.0.0",
+    "crypto2": "^0.3.2",
+    "bitcoin-address": "^0.3.0",
+    "bip38": "^2.0.1",
+    "big.js": "^3.1.3",
+    "big-number": "^0.4.0",
+    "moment": "^2.18.1",
+    "npm": "^4.6.1",
+    "prelude-ls": "^1.1.2"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "npm run main && mocha test/2_rate",
-    "main": "fs 'src/**/*.ls' | replace 'src','' | replace '.ls','' | map 'lsc -cp ./src*.ls > .*.js' | bash"
+  "main": "./main/main.js",
+  "description": "",
+  "subversion": 62,
+  "uperversion": "0.1",
+  "version": "0.1.62",
+  "homepage": "https://github.com/blockstarter/blockstarter#readme",
+  "bugs": {
+    "url": "https://github.com/blockstarter/blockstarter/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/blockstarter/blockstarter.git"
-  },
+  "license": "ISC",
+  "author": "Blockstarter.co",
   "keywords": [
     "bitcoin",
     "blockchain",
     "ico"
   ],
-  "author": "Blockstarter.co",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/blockstarter/blockstarter/issues"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blockstarter/blockstarter.git"
   },
-  "homepage": "https://github.com/blockstarter/blockstarter#readme"
+  "scripts": {
+    "test": "npm run main && mocha test/2_rate",
+    "main": "fs 'src/**/*.ls' | replace 'src','' | replace '.ls','' | map 'lsc -cp ./src*.ls > .*.js' | bash"
+  },
+  "name": "blockstarter"
 }

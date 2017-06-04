@@ -1,3 +1,8 @@
+# Blockstarter Rate History built for Aeternity 
+
+# Developers Alex Siman and Andrey Stegno
+
+
 require! {
     \request
     \./rate-cache.js
@@ -114,7 +119,7 @@ export get-rate = (ts)->
     ETH: 
         BTC: btc-eth
         CHF: usdt-eth
-    
+
 get-rate-by-pair = (ts, currency-pair)->
     rounded = round-minute-quarter \ceil, ts
     rate-index[currency-pair]?[rounded]
