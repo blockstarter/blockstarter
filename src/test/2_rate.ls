@@ -48,7 +48,6 @@ it \use-index, (done)->
   
 it \validate-index, (done)->
   index = main.rate-history.rate-index
-  console.log index.BTC_ETH
   expect index.BTC_ETH['1496279700'] .to-be '0.09646253029083228227'
   expect index.BTC_ETH['1496280600'] .to-be '0.09675693987362170457'
   expect index.BTC_ETH['1496281500'] .to-be '0.09592861752295677433'

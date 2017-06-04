@@ -1,0 +1,2 @@
+npm i livescript nixar -g
+rm -rf node_modules/bitcore-message/node_modules/bitcore-lib/
