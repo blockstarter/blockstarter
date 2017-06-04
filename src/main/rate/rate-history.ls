@@ -19,7 +19,7 @@ round-minute-quarter-trade = (trade)->
 round-minute-quarter = (direction, date)-->
     plus = if direction is \ceil then 1 else 0
     ts = date-to-ts date
-    parse-int(ts / each-minute-quarter + 1) * each-minute-quarter
+    parse-int(ts / each-minute-quarter) * each-minute-quarter + each-minute-quarter
 
 observers = []
 
