@@ -152,7 +152,7 @@ export get-rate = (ts)->
         CHF: usdt-eth
 
 get-rate-by-pair = (ts, currency-pair)->
-    rounded = round-minute-quarter \ceil, ts
+    rounded = round-minute-quarter \floor, ts
     rate-index[currency-pair]?[rounded]
     
 get-or-load-rate = ({start-campaign-date, ts, currency-pair}, cb) ->

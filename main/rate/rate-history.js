@@ -240,7 +240,7 @@
   };
   getRateByPair = function(ts, currencyPair){
     var rounded, ref$;
-    rounded = roundMinuteQuarter('ceil', ts);
+    rounded = roundMinuteQuarter('floor', ts);
     return (ref$ = rateIndex[currencyPair]) != null ? ref$[rounded] : void 8;
   };
   getOrLoadRate = function(arg$, cb){
