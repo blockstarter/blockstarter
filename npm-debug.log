@@ -1,0 +1,43 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/ubuntu/.nvm/versions/node/v4.7.3/bin/node',
+1 verbose cli   '/home/ubuntu/.nvm/versions/node/v4.7.3/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'test' ]
+2 info using npm@2.15.11
+3 info using node@v4.7.3
+4 verbose run-script [ 'pretest', 'test', 'posttest' ]
+5 info pretest blockstarter@0.1.70
+6 info test blockstarter@0.1.70
+7 verbose unsafe-perm in lifecycle true
+8 info blockstarter@0.1.70 Failed to exec test script
+9 verbose stack Error: blockstarter@0.1.70 test: `npm run main && mocha`
+9 verbose stack Exit status 3
+9 verbose stack     at EventEmitter.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.7.3/lib/node_modules/npm/lib/utils/lifecycle.js:217:16)
+9 verbose stack     at emitTwo (events.js:87:13)
+9 verbose stack     at EventEmitter.emit (events.js:172:7)
+9 verbose stack     at ChildProcess.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.7.3/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+9 verbose stack     at emitTwo (events.js:87:13)
+9 verbose stack     at ChildProcess.emit (events.js:172:7)
+9 verbose stack     at maybeClose (internal/child_process.js:854:16)
+9 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:222:5)
+10 verbose pkgid blockstarter@0.1.70
+11 verbose cwd /home/ubuntu/workspace
+12 error Linux 4.9.17-c9
+13 error argv "/home/ubuntu/.nvm/versions/node/v4.7.3/bin/node" "/home/ubuntu/.nvm/versions/node/v4.7.3/bin/npm" "run" "test"
+14 error node v4.7.3
+15 error npm  v2.15.11
+16 error code ELIFECYCLE
+17 error blockstarter@0.1.70 test: `npm run main && mocha`
+17 error Exit status 3
+18 error Failed at the blockstarter@0.1.70 test script 'npm run main && mocha'.
+18 error This is most likely a problem with the blockstarter package,
+18 error not with npm itself.
+18 error Tell the author that this fails on your system:
+18 error     npm run main && mocha
+18 error You can get information on how to open an issue for this project with:
+18 error     npm bugs blockstarter
+18 error Or if that isn't available, you can get their info via:
+18 error
+18 error     npm owner ls blockstarter
+18 error There is likely additional logging output above.
+19 verbose exit [ 1, true ]

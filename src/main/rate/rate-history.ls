@@ -119,7 +119,7 @@ upload-rates = ({start-campaign-date, currency-pair, to-date}, cb)-->
       items ++ next-items
    cb null, all-items
 
-rate-index = {}
+export rate-index = {}
 
 export get-rate-index = (currency-pair)->
    rate-index[currency-pair] ? {}

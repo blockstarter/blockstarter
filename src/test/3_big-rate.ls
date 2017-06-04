@@ -65,7 +65,6 @@ it \big-rate-index-create_USDT_ETH, (done)->
   main.rate-history.$off!
   done!
 
-
 it \rates-cryptocompare, (done)->
   @timeout 120 * 1000
   coins = all-coins
