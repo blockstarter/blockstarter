@@ -31,8 +31,8 @@ it \big-rate-index-create_BTC_ETH, (done)->
       console.log \aggregation-start, start, length
     .$on \aggregation-stop, ({end, duration})->
       console.log \aggregation-stop, end, duration
-    .$on \create-index-end, ({start-campaign-date, current-url})->
-      console.log \create-index-end, start-campaign-date, current-url
+    .$on \create-index-end, ({start-campaign-date})->
+      console.log \create-index-end, start-campaign-date
   err, rates <-! main.rate-history.create-rate-index {start-campaign-date, currency-pair, to-date}
   expect err .to-be null
   expect get-rates! .to-be rates
@@ -56,8 +56,8 @@ it \big-rate-index-create_USDT_ETH, (done)->
       console.log \aggregation-start, start, length
     .$on \aggregation-stop, ({end, duration})->
       console.log \aggregation-stop, end, duration
-    .$on \create-index-end, ({start-campaign-date, current-url})->
-      console.log \create-index-end, start-campaign-date, current-url
+    .$on \create-index-end, ({start-campaign-date})->
+      console.log \create-index-end, start-campaign-date
   err, rates <-! main.rate-history.create-rate-index {start-campaign-date, currency-pair, to-date}
   expect err .to-be null
   expect get-rates! .to-be rates
