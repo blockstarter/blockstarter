@@ -186,7 +186,7 @@
   rateIndex = {};
   out$.getRateIndex = getRateIndex = function(currencyPair){
     var ref$;
-    return (ref$ = rateIndex[currencyPair]) != null
+    return rateIndex[currencyPair] = (ref$ = rateIndex[currencyPair]) != null
       ? ref$
       : {};
   };

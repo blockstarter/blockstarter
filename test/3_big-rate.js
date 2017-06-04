@@ -37,9 +37,9 @@
         end = arg$.end, duration = arg$.duration;
         return console.log('aggregation-stop', end, duration);
       }).$on('create-index-end', function(arg$){
-        var startCampaignDate, currentUrl;
-        startCampaignDate = arg$.startCampaignDate, currentUrl = arg$.currentUrl;
-        return console.log('create-index-end', startCampaignDate, currentUrl);
+        var startCampaignDate;
+        startCampaignDate = arg$.startCampaignDate;
+        return console.log('create-index-end', startCampaignDate);
       });
       return main.rateHistory.createRateIndex({
         startCampaignDate: startCampaignDate,
@@ -79,9 +79,9 @@
         end = arg$.end, duration = arg$.duration;
         return console.log('aggregation-stop', end, duration);
       }).$on('create-index-end', function(arg$){
-        var startCampaignDate, currentUrl;
-        startCampaignDate = arg$.startCampaignDate, currentUrl = arg$.currentUrl;
-        return console.log('create-index-end', startCampaignDate, currentUrl);
+        var startCampaignDate;
+        startCampaignDate = arg$.startCampaignDate;
+        return console.log('create-index-end', startCampaignDate);
       });
       return main.rateHistory.createRateIndex({
         startCampaignDate: startCampaignDate,
