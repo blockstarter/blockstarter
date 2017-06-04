@@ -1,5 +1,5 @@
 require! { 
-    expect 
+    \expect 
     \../main/main.js
     \big.js
     \prelude-ls : \p
@@ -12,65 +12,132 @@ run <-! describe \Rate
 
 _ = JSON.stringify
 
-d = (date)->
-    moment(date, "YYYY-MM-DD HH:mm").to-date!.get-time! / 1000
+
+
+it \rate-index-create_BTC_ETH, (done)->
+  @timeout 90000
+  to-date = moment('2017-06-01 12:00:00', 'YYYY-MM-DD hh:mm:ss').to-date!.get-time! / 1000
+  start-campaign-date = to-date - (20 * 60 * 60)
+  currency-pair = \BTC_ETH
+  keys = ->
+    Object.keys(main.rate-history.rate-index[currency-pair] ? {}).length
+  expect keys! .to-be 0
+  err <-! main.rate-history.create-rate-index {start-campaign-date, currency-pair, to-date}
+  expect err .to-be null
+  expect keys! .to-be-greater-than 0
+  done!
+  
+it \rate-index-create_USDT_ETH, (done)->
+  @timeout 90000
+  to-date = moment('2017-06-01 12:00:00', 'YYYY-MM-DD hh:mm:ss').to-date!.get-time! / 1000
+  start-campaign-date = to-date - (20 * 60 * 60)
+  currency-pair = \USDT_ETH
+  keys = ->
+    Object.keys(main.rate-history.rate-index[currency-pair] ? {}).length
+  expect keys! .to-be 0
+  err <-! main.rate-history.create-rate-index {start-campaign-date, currency-pair, to-date}
+  expect err .to-be null
+  expect keys! .to-be-greater-than 0
+  done!
+
+it \use-index, (done)->
+  keys = ->
+    Object.keys(main.rate-history.rate-index).length
+  expect keys! .to-be-greater-than 0
+  done!
+  
+it \validate-index, (done)->
+  index = main.rate-history.rate-index
+  console.log index.BTC_ETH
+  expect index.BTC_ETH['1496279700'] .to-be '0.09646253029083228227'
+  expect index.BTC_ETH['1496280600'] .to-be '0.09675693987362170457'
+  expect index.BTC_ETH['1496281500'] .to-be '0.09592861752295677433'
+  expect index.BTC_ETH['1496282400'] .to-be '0.09548791189391519931'
+  expect index.BTC_ETH['1496283300'] .to-be '0.09716204780483330175'
+  expect index.BTC_ETH['1496284200'] .to-be '0.09672959373174968323'
+  expect index.BTC_ETH['1496285100'] .to-be '0.09714683235457762815'
+  expect index.BTC_ETH['1496286000'] .to-be '0.09849250302780128774'
+  expect index.BTC_ETH['1496286900'] .to-be '0.0987041884630781329'
+  expect index.BTC_ETH['1496287800'] .to-be '0.09920800627020897573'
+  expect index.BTC_ETH['1496288700'] .to-be '0.09835841956083734385'
+  expect index.BTC_ETH['1496289600'] .to-be '0.09767701194639689776'
+  expect index.BTC_ETH['1496290500'] .to-be '0.0978859470654553916'
+  expect index.BTC_ETH['1496291400'] .to-be '0.0973667326462719241'
+  expect index.BTC_ETH['1496292300'] .to-be '0.09709661343155509171'
+  expect index.BTC_ETH['1496293200'] .to-be '0.09677887507421285383'
+  expect index.BTC_ETH['1496294100'] .to-be '0.09750921687975925812'
+  expect index.BTC_ETH['1496295000'] .to-be '0.09745885041498921889'
+  expect index.BTC_ETH['1496295900'] .to-be '0.09752093052299601421'
+  expect index.BTC_ETH['1496296800'] .to-be '0.09776152047870758321'
+  expect index.BTC_ETH['1496297700'] .to-be '0.0976395299242219353'
+  expect index.BTC_ETH['1496298600'] .to-be '0.09767165595510213404'
+  expect index.BTC_ETH['1496299500'] .to-be '0.09851383741323430677'
+  expect index.BTC_ETH['1496300400'] .to-be '0.09789061751187147101'
+  expect index.BTC_ETH['1496301300'] .to-be '0.09710277061138622951'
+  expect index.BTC_ETH['1496302200'] .to-be '0.09704065595624124193'
+  expect index.BTC_ETH['1496303100'] .to-be '0.0971213415668452932'
+  expect index.BTC_ETH['1496304000'] .to-be '0.09623592708655126199'
+  expect index.BTC_ETH['1496304900'] .to-be '0.09533368734198909928'
+  expect index.BTC_ETH['1496305800'] .to-be '0.09389105047247266473'
+  expect index.BTC_ETH['1496306700'] .to-be '0.09430878867405417301'
+  expect index.BTC_ETH['1496307600'] .to-be '0.09476392182510527175'
+  expect index.BTC_ETH['1496308500'] .to-be '0.09434161402172733173'
+  expect index.BTC_ETH['1496309400'] .to-be '0.09440318693300964315'
+  expect index.BTC_ETH['1496310300'] .to-be '0.09422987749686263119'
+  expect index.BTC_ETH['1496311200'] .to-be '0.09437541993288284248'
+  expect index.BTC_ETH['1496312100'] .to-be '0.09423480179700469022'
+  expect index.BTC_ETH['1496313000'] .to-be '0.0950620572310785529'
+  expect index.BTC_ETH['1496313900'] .to-be '0.09572315159116917355'
+  expect index.BTC_ETH['1496314800'] .to-be '0.09609890405986908839'
+  expect index.BTC_ETH['1496315700'] .to-be '0.09521569092462984114'
+  expect index.BTC_ETH['1496316600'] .to-be '0.09466042015927515673'
+  expect index.BTC_ETH['1496317500'] .to-be '0.09429862663102370146'
+  expect index.BTC_ETH['1496318400'] .to-be '0.09330860236293775517'
+  done!
+
 
 it \rate-history-0, (done)->
   @timeout 25000
-  err, result <-! main.rate-history d "2017-05-28 4:30"
-  expect _ result .to-be _ { ETH: { BTC: '0.07846300', CHF: '167.00000000' } }
+  result = main.rate-history.get-rate "2017-06-01 11:00:00"
+  expect _ result .to-be _ { ETH: { BTC: '0.09521569092462984114', CHF: '221.35216978046772883573' } }
   done!
 
 it \rate-history-1, (done)->
   @timeout 15000
-  err, result <-! main.rate-history d "2017-05-30 4:30"
-  expect _ result .to-be _ { ETH: { BTC: '0.08900010', CHF: '199.50000001' } }
+  result = main.rate-history.get-rate "2017-06-01 10:00:00"
+  expect _ result .to-be _ { ETH: { BTC: '0.09423480179700469022', CHF: '218.96725721500082564989' } }
   done!
 
 it \rate-history-2, (done)->
   @timeout 15000
-  err, result <-! main.rate-history d "2017-06-01 4:30"
-  expect _ result .to-be _ { ETH: { BTC: '0.09699600', CHF: '219.46044850' } }
+  result = main.rate-history.get-rate "2017-06-01 09:00:00"
+  expect _ result .to-be _ { ETH: { BTC: '0.09434161402172733173', CHF: '220.11719164516814684538' } }
   done!
 
 it \rate-history-3, (done)->
   @timeout 15000
-  err, result <-! main.rate-history d "2017-06-01 22:30"
-  expect _ result .to-be _ { ETH: { BTC: '0.09276898', CHF: '211.50000000' } }
+  result = main.rate-history.get-rate "2017-06-01 08:00:00"
+  expect _ result .to-be _ { ETH: { BTC: '0.09533368734198909928', CHF: '222.15297001160537129368' } }
   done!
 
 it \rate-history-3-duplicate, (done)->
   @timeout 15000
-  err, result <-! main.rate-history d "2017-06-01 22:30"
-  expect _ result .to-be _ { ETH: { BTC: '0.09276898', CHF: '211.50000000' } }
+  result = main.rate-history.get-rate "2017-06-01 08:00:00"
+  expect _ result .to-be _ { ETH: { BTC: '0.09533368734198909928', CHF: '222.15297001160537129368' } }
   done!
 
 it \rate-history-4, (done)->
   @timeout 8000
-  err, result <-! main.rate-history d "2017-06-01 23:30"
-  expect _ result .to-be _ { ETH: { BTC: '0.09198971', CHF: '211.30000058' } }
+  result = main.rate-history.get-rate "2017-06-01 06:00:00"
+  expect _ result .to-be _ { ETH: { BTC: '0.0976395299242219353', CHF: '223.83178639860049175969' } }
   done!
 
 it \rate-history-4-duplicate, (done)->
   @timeout 8000
-  err, result <-! main.rate-history d "2017-06-01 23:30"
-  expect _ result .to-be _ { ETH: { BTC: '0.09198971', CHF: '211.30000058' } }
+  result = main.rate-history.get-rate "2017-06-01 06:00:00"
+  expect _ result .to-be _ { ETH: { BTC: '0.0976395299242219353', CHF: '223.83178639860049175969' } }
   done!
-  
-  
-it \rate-history-smarter-1, (done)->
-  @timeout 8000
-  run = (count, cb)->
-      err, result <-! main.rate-history.smarter d "2017-06-01 23:30"
-      expect _ result .to-be _ { ETH: { BTC: '0.09198971', CHF: '211.30000058' } }
-      next-count = count - 1
-      return cb err, result if next-count is 0
-      err, next-result <-! run next-count
-      expect _ result .to-be _ next-result
-      cb err, result
-      
-  err, result <-! run 50
-  done!
+
 
 it \rates-cryptocompare, (done)->
   @timeout 5000

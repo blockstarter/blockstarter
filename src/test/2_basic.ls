@@ -72,5 +72,4 @@ it \balance, (done)!->
     cb err
   err <-! check-balances all-coins
   expect err .to-be null
-  #console.log \done
   done null
