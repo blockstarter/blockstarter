@@ -183,12 +183,9 @@
       });
     });
   });
-  rateIndex = {};
+  out$.rateIndex = rateIndex = {};
   out$.getRateIndex = getRateIndex = function(currencyPair){
-    var ref$;
-    return (ref$ = rateIndex[currencyPair]) != null
-      ? ref$
-      : {};
+    return rateIndex[currencyPair];
   };
   out$.setRateIndex = setRateIndex = function(currencyPair, rateIndex){
     return rateIndex[currencyPair] = rateIndex;

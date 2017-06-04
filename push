@@ -1,3 +1,4 @@
+npm run main
 jq .subversion=.subversion+1 package.json > output.json
 jq .version=.uperversion+\".\"+\(.subversion\|tostring\) output.json > package.json
 rm output.json
