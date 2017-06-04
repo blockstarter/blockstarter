@@ -34,13 +34,17 @@ notify = (name, data)->
               |> p.each (-> it data)
 
 export $off = (cb)->
+    if not cb?
+       observers.length = 0
     index =
         observers.map(-> it.1).index-of(cb) > -1
     if index > -1
        observers.splice index, 1
+    { $off }
 
 export $on = (name, cb)->
     observers.push [name, cb]
+    { $on }
 
 date-to-ts = (date) ->
    switch typeof! date 
@@ -56,19 +60,45 @@ calc-avg-trade = (accum, t) ->
     accum.sumOfA = accum.sumOfA.plus t.amount
     accum
 
-calc-avg = ([ts, trades])->
+calc-avg = (trades)->
     accum = 
         sumOfRxA: new big 0
         sumOfA: new big 0
     result = 
         trades |> p.foldl calc-avg-trade, accum
-    avg = result.sumOfRxA.div(result.sumOfA).to-string!
-    {ts, avg}
-
+    result.sumOfRxA.div(result.sumOfA).to-string!
 
 # start-campaign-date : 1496063101
 
-load-rates = ({start-campaign-date, currency-pair, to-date}, cb)-->
+aggregate = (collector, trade)->
+    collector.unique = collector.unique ? {}
+    return collector if trade.avg?
+    return collector if collector.unique[trade.globalTradeID]?
+    collector.unique[trade.globalTradeID] = yes
+    group = round-minute-quarter-trade trade
+    collector[group] = collector[group] ? []
+    collector[group].push trade
+    collector
+    
+calc-all-avgs = (collector)->
+    delete collector.unique
+    for key in Object.keys(collector)
+        collector[key] = calc-avg collector[key]
+    collector
+
+export load-rates = (config, cb)-->
+    err, items <-! upload-rates config
+    return cb err if err?
+    start = new Date!
+    notify \aggregation-start, { items.length, start}
+    result =
+        items |> p.foldl aggregate, {}
+              |> calc-all-avgs
+    end = new Date!
+    notify \aggregation-stop, { end, duration: start.get-time! - end.get-time! }
+    cb null, result
+
+upload-rates = ({start-campaign-date, currency-pair, to-date}, cb)-->
    return cb "Input Error" if not start-campaign-date? or not currency-pair? or not to-date?
    url = build-url currency-pair
    start_campaign_ts = date-to-ts start-campaign-date
@@ -83,18 +113,16 @@ load-rates = ({start-campaign-date, currency-pair, to-date}, cb)-->
    last = items[items.length - 1]
    next-ts = last.date
    return cb null, items if start_campaign_ts > to-ts
-   err, next-items <-! load-rates {start-campaign-date, currency-pair, to-date: next-ts}
+   err, next-items <-! upload-rates {start-campaign-date, currency-pair, to-date: next-ts}
    return cb "Error for #{url}/#{next-ts}: #{err}" if err?
    all-items = 
-      items |> (-> it ++ next-items)
-            |> p.unique-by (.globalTradeID)
-            |> p.filter (-> not it.avg?)
-            |> p.group-by round-minute-quarter-trade 
-            |> p.obj-to-pairs
-            |> p.map calc-avg
+      items ++ next-items
    cb null, all-items
 
-export rate-index = {}
+rate-index = {}
+
+export get-rate-index = (currency-pair)->
+   rate-index[currency-pair] ? {}
 
 export create-rate-index = ({start-campaign-date, currency-pair, to-date}, cb)->
    create-rate-index.running = create-rate-index.running ? {}
@@ -107,10 +135,10 @@ export create-rate-index = ({start-campaign-date, currency-pair, to-date}, cb)->
      cb err, res
    err, rates <-! load-rates {start-campaign-date, currency-pair, to-date}
    return cb-wrap err if err?
-   ri = rate-index[currency-pair] = rate-index[currency-pair] ? {}
-   ensure-index = ({ts, avg})-> ri[ts] = avg
-   rates |> p.each ensure-index
-   cb-wrap null
+   ri = rate-index[currency-pair] = rates
+   #ensure-index = ([ts, avg])-> ri[ts] = avg
+   #rates |> p.obj-to-pairs |> p.each ensure-index
+   cb-wrap null, rates
 
 
 export get-rate = (ts)->
