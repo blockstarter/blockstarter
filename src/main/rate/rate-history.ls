@@ -49,7 +49,7 @@ export $on = (name, cb)->
 
 
 get-string = (date)->
-    | date.match(/^[0-9]+/) => parse-int date
+    | date.match(/^[0-9]+$/) => parse-int date
     | _ => moment(date.replace(' ', \T) + \Z).unix!
 
 date-to-ts = (date) ->

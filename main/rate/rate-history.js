@@ -57,7 +57,7 @@
   };
   getString = function(date){
     switch (false) {
-    case !date.match(/^[0-9]+/):
+    case !date.match(/^[0-9]+$/):
       return parseInt(date);
     default:
       return moment(date.replace(' ', 'T') + 'Z').unix();
