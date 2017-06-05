@@ -3,6 +3,7 @@
 # Developers Alex Siman and Andrey Stegno
 
 
+
 require! {
     \request
     \./rate-cache.js
@@ -46,9 +47,14 @@ export $on = (name, cb)->
     observers.push [name, cb]
     { $on }
 
+
+get-string = (date)->
+    | date.match(/^[0-9]+/) => parse-int date
+    | _ => moment(date.replace(' ', \T) + \Z).unix!
+
 date-to-ts = (date) ->
    switch typeof! date 
-     case \String then moment(date.replace(' ', \T) + \Z).unix!
+     case \String then get-string date
      case \Number then date
      case \Date  then parse-int(date.get-time! / 1000)
      case \Undefined then null
@@ -122,23 +128,24 @@ upload-rates = ({start-campaign-date, currency-pair, to-date}, cb)-->
 export rate-index = {}
 
 export get-rate-index = (currency-pair)->
-   rate-index[currency-pair]
+   rate-index[currency-pair.to-lower-case!]
    
 export set-rate-index = (currency-pair, rate-index)->
-   rate-index[currency-pair]  = rate-index
+   rate-index[currency-pair.to-lower-case!]  = rate-index
+
 
 export create-rate-index = ({start-campaign-date, currency-pair, to-date}, cb)->
    rate-index.running = rate-index.running ? {}
-   return cb \Running if rate-index.running[currency-pair]
+   return cb \Running if rate-index.running[currency-pair.to-lower-case!]
    notify \create-index-start, { start-campaign-date, currency-pair, to-date }
-   rate-index.running[currency-pair] = yes
+   rate-index.running[currency-pair.to-lower-case!] = yes
    cb-wrap = (err, res)->
-     rate-index.running[currency-pair] = no
+     rate-index.running[currency-pair.to-lower-case!] = no
      notify \create-index-end, { start-campaign-date, currency-pair, to-date }
      cb err, res
    err, rates <-! load-rates {start-campaign-date, currency-pair, to-date}
    return cb-wrap err if err?
-   ri = rate-index[currency-pair] = rates
+   ri = rate-index[currency-pair.to-lower-case!] = rates
    #ensure-index = ([ts, avg])-> ri[ts] = avg
    #rates |> p.obj-to-pairs |> p.each ensure-index
    cb-wrap null, rates
@@ -152,7 +159,7 @@ export get-rate = (ts)->
 
 get-rate-by-pair = (ts, currency-pair)->
     rounded = round-minute-quarter \floor, ts
-    rate-index[currency-pair]?[rounded]
+    rate-index[currency-pair.to-lower-case!]?[rounded]
     
 get-or-load-rate = ({start-campaign-date, ts, currency-pair}, cb) ->
     rate = get-rate {ts, currency-pair}
