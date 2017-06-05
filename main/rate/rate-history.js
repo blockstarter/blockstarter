@@ -145,7 +145,7 @@
     url = buildUrl(currencyPair);
     start_campaign_ts = dateToTs(startCampaignDate);
     toTs = dateToTs(toDate);
-    currentUrl = url + "&end=" + toTs;
+    currentUrl = url + "&end=" + (toTs + eachMinuteQuarter);
     notify('load-rates', {
       startCampaignDate: startCampaignDate,
       currencyPair: currencyPair,
@@ -193,10 +193,10 @@
   out$.createRateIndex = createRateIndex = function(arg$, cb){
     var startCampaignDate, currencyPair, toDate, ref$, cbWrap;
     startCampaignDate = arg$.startCampaignDate, currencyPair = arg$.currencyPair, toDate = arg$.toDate;
-    createRateIndex.running = (ref$ = createRateIndex.running) != null
+    rateIndex.running = (ref$ = rateIndex.running) != null
       ? ref$
       : {};
-    if (createRateIndex.running[currencyPair]) {
+    if (rateIndex.running[currencyPair]) {
       return cb('Running');
     }
     notify('create-index-start', {
@@ -204,9 +204,9 @@
       currencyPair: currencyPair,
       toDate: toDate
     });
-    createRateIndex.running[currencyPair] = true;
+    rateIndex.running[currencyPair] = true;
     cbWrap = function(err, res){
-      createRateIndex.running[currencyPair] = false;
+      rateIndex.running[currencyPair] = false;
       notify('create-index-end', {
         startCampaignDate: startCampaignDate,
         currencyPair: currencyPair,

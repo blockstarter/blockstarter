@@ -9,8 +9,23 @@
   fs = require('fs');
   allCoins = ['eth', 'btc', 'ltc'];
   describe('BigRate', function(run){
-    var _;
+    var _, save;
     _ = JSON.stringify;
+    save = function(currencyPair, rates){
+      var tranform, human;
+      tranform = function(arg$){
+        var ts, val, u;
+        ts = arg$[0], val = arg$[1];
+        u = moment.unix(ts).utc().toString();
+        return [u, val];
+      };
+      human = p.pairsToObj(
+      p.map(tranform)(
+      p.objToPairs(
+      rates)));
+      fs.writeFileSync("./logs/" + currencyPair + ".json", JSON.stringify(rates, null, 2));
+      return fs.writeFileSync("./logs/" + currencyPair + "-human.json", JSON.stringify(human, null, 2));
+    };
     it('big-rate-index-create_BTC_ETH', function(done){
       var startCampaignDate, toDate, currencyPair, getRates;
       this.timeout(120 * 1000);
@@ -48,7 +63,7 @@
       }, function(err, rates){
         expect(err).toBe(null);
         expect(getRates()).toBe(rates);
-        fs.writeFileSync("./logs/" + currencyPair + ".json", JSON.stringify(rates, null, 2));
+        save(currencyPair, rates);
         main.rateHistory.$off();
         done();
       });
@@ -90,7 +105,7 @@
       }, function(err, rates){
         expect(err).toBe(null);
         expect(getRates()).toBe(rates);
-        fs.writeFileSync("./logs/" + currencyPair + ".json", JSON.stringify(rates, null, 2));
+        save(currencyPair, rates);
         main.rateHistory.$off();
         done();
       });

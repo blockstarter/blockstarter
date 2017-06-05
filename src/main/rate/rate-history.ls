@@ -103,7 +103,7 @@ upload-rates = ({start-campaign-date, currency-pair, to-date}, cb)-->
    url = build-url currency-pair
    start_campaign_ts = date-to-ts start-campaign-date
    to-ts = date-to-ts to-date
-   current-url = "#{url}&end=#{to-ts}"
+   current-url = "#{url}&end=#{to-ts + each-minute-quarter}"
    notify \load-rates, {start-campaign-date, currency-pair, to-date, current-url}
    err, response, body <-! request current-url
    return cb err if err?
@@ -128,12 +128,12 @@ export set-rate-index = (currency-pair, rate-index)->
    rate-index[currency-pair]  = rate-index
 
 export create-rate-index = ({start-campaign-date, currency-pair, to-date}, cb)->
-   create-rate-index.running = create-rate-index.running ? {}
-   return cb \Running if create-rate-index.running[currency-pair]
+   rate-index.running = rate-index.running ? {}
+   return cb \Running if rate-index.running[currency-pair]
    notify \create-index-start, { start-campaign-date, currency-pair, to-date }
-   create-rate-index.running[currency-pair] = yes
+   rate-index.running[currency-pair] = yes
    cb-wrap = (err, res)->
-     create-rate-index.running[currency-pair] = no
+     rate-index.running[currency-pair] = no
      notify \create-index-end, { start-campaign-date, currency-pair, to-date }
      cb err, res
    err, rates <-! load-rates {start-campaign-date, currency-pair, to-date}
@@ -142,7 +142,6 @@ export create-rate-index = ({start-campaign-date, currency-pair, to-date}, cb)->
    #ensure-index = ([ts, avg])-> ri[ts] = avg
    #rates |> p.obj-to-pairs |> p.each ensure-index
    cb-wrap null, rates
-
 
 export get-rate = (ts)->
     btc-eth = get-rate-by-pair ts, \BTC_ETH

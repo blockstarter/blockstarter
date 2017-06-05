@@ -14,6 +14,14 @@ run <-! describe \BigRate
 _ = JSON.stringify
 
 
+save = (currency-pair, rates)->
+  tranform = ([ts, val])->
+    u = moment.unix(ts).utc!.to-string!
+    [u, val]
+  human = 
+    rates |> p.obj-to-pairs |> p.map(tranform) |> p.pairs-to-obj
+  fs.write-file-sync "./logs/#{currency-pair}.json", JSON.stringify(rates, null, 2)
+  fs.write-file-sync "./logs/#{currency-pair}-human.json", JSON.stringify(human, null, 2)
 
 it \big-rate-index-create_BTC_ETH, (done)->
   @timeout 120 * 1000
@@ -36,7 +44,7 @@ it \big-rate-index-create_BTC_ETH, (done)->
   err, rates <-! main.rate-history.create-rate-index {start-campaign-date, currency-pair, to-date}
   expect err .to-be null
   expect get-rates! .to-be rates
-  fs.write-file-sync "./logs/#{currency-pair}.json", JSON.stringify(rates, null, 2)
+  save currency-pair, rates
   main.rate-history.$off!
   done!
   
@@ -61,7 +69,7 @@ it \big-rate-index-create_USDT_ETH, (done)->
   err, rates <-! main.rate-history.create-rate-index {start-campaign-date, currency-pair, to-date}
   expect err .to-be null
   expect get-rates! .to-be rates
-  fs.write-file-sync "./logs/#{currency-pair}.json", JSON.stringify(rates, null, 2)
+  save currency-pair, rates
   main.rate-history.$off!
   done!
 
